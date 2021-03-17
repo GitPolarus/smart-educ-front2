@@ -1,0 +1,49 @@
+
+<div class="limiter">
+  <div class="container-login100">
+    <div class="wrap-login100 p-t-85 p-b-20">
+      <form class="login100-form validate-form"  name="form" (ngSubmit)="f.form.valid && onSubmit()" #f="ngForm" novalidate>
+					<span class="login100-form-title p-b-70">
+						Authentification
+					</span>
+        <span class="login100-form-avatar">
+						<img src="assets/images/profile.png" alt="AVATAR">
+        </span>
+
+
+
+
+        <div class="p-fluid p-mx-auto">
+          <div class="p-mx-auto p-pb-4">
+            <label for="float-input">Username</label>
+            <input id="float-input" name="email" [(ngModel)]="user.email" type="email" placeholder="Email" class="ng-dirty ng-invalid p-mr-2" pInputText>
+        </div>
+
+        <div>
+          <label for="password">Mot de passe</label>
+          <p-password id="password" name="password" [(ngModel)]="user.password" [toggleMask]="true" [feedback]="false"></p-password>
+        </div>
+          <!-- <input id="password" type="password" class="form-control  input100 wrap-input100" name="password" [(ngModel)]="user.password" #password="ngModel"
+                 required minlength="3" />
+          <div *ngIf="f.submitted && password.invalid">
+            <div class="label_alert" *ngIf="password.errors.required">Mot de passe Obligatoire</div>
+            <div class="label_alert" *ngIf="password.errors.minlength">Password must be at least 3 characters</div>
+          </div> -->
+        </div>
+
+
+        <div class="container-login100-form-btn">
+          <button class="btn login100-form-btn">
+            Login
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+

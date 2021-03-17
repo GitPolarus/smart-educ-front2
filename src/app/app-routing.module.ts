@@ -1,10 +1,34 @@
+import { ListSyllabusComponent } from './pages/syllabi/list-syllabus/list-syllabus.component';
+import { Routes, RouterModule } from '@angular/router';
+import { UserFormModalComponent } from './pages/modal/user-form-modal/user-form-modal.component';
+import { NewUserComponent } from './pages/users/new-user/new-user.component';
+import { PageNotFoundComponent } from './pages/page-not-found/page-not-found.component';
+import { VisitorComponent } from './views/visitor/visitor.component';
+import { LoginComponent } from './pages/login/login.component';
 import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
 
-const routes: Routes = [];
+const routes: Routes = [
+  { path: '', component: VisitorComponent ,
+    children:[
+      {
+        path: 'home', component: NewUserComponent ,
+      },
+      {
+        path: 'login', component: LoginComponent ,
+      },
+      {
+        path: 'syllabi', component: ListSyllabusComponent ,
+      }
+    ]
+  },
+
+
+  { path: '', redirectTo: 'home', pathMatch: 'full' },
+  { path: '**', component: PageNotFoundComponent },
+];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}

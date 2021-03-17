@@ -1,11 +1,12 @@
-import {Objectif} from './objectif.model';
-import { Course } from "./Course";
+import { Course } from './course.model';
+import { CourseOutcome } from './courseoutcome.model';
+
 
 export class Syllabus{
   public nomProf:String;
   public nomCourse:String;
   public syllabusURL:String;
-  public objectifs:Objectif[]
+  public co:CourseOutcome[]
   public course:Course;
   public anneeAcademique: string;
 
@@ -19,11 +20,11 @@ export class Syllabus{
   }
 
 
-  constructor(nomProf: String,nomCourse: String, syllabusURL: String, objectifs: Objectif[], anneeAcademique:string) {
+  constructor(nomProf: String,nomCourse: String, syllabusURL: String, co: CourseOutcome[], anneeAcademique:string) {
     this.nomProf = nomProf;
     this.nomCourse = nomCourse;
     this.syllabusURL = syllabusURL;
-    this.objectifs = objectifs;
+    this.co = co;
     this.anneeAcademique = anneeAcademique;
   }
 }

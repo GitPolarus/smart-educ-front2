@@ -1,6 +1,5 @@
 import { LoaderService } from './../../services/loader.service';
 import { Component, OnInit } from '@angular/core';
-import { ProgressSpinnerMode } from '@angular/material/progress-spinner';
 
 @Component({
   selector: 'app-loader',
@@ -9,7 +8,6 @@ import { ProgressSpinnerMode } from '@angular/material/progress-spinner';
 })
 export class LoaderComponent implements OnInit {
   loading: boolean;
-  mode: ProgressSpinnerMode = 'indeterminate';
 
   constructor(private loaderService: LoaderService) {
 

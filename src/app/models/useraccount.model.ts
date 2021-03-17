@@ -1,33 +1,35 @@
-import { Role } from "./role.model";
+import { Role } from './role.model';
 
-export class UserAccount{
+export class UserAccount {
   id: number;
-  firstName:string;
+  firstName: string;
   lastName: string;
   email: string;
-  password : string;
+  sendEmail = false;
+  password: string;
   looked: boolean;
   passwordExpired: boolean;
   enabled: boolean;
   creationDate: Date;
   updateDate: Date;
   createdBy: string;
-  accessToken:string
+  accessToken: string;
+  token: string;
   tokenType: string;
+  roles: Role[];
   authorities: Array<Role>;
-  _links:{
-    self:{
-      href:string;
-      },
-    roles:{
-      href:string;
-    },
-    portfolio:{
-      href:string;
-    },
-    userProfile:{
-      href:string;
-    }
-  }
-
+  _links: {
+    self: {
+      href: string;
+    };
+    roles: {
+      href: string;
+    };
+    portfolio: {
+      href: string;
+    };
+    userProfile: {
+      href: string;
+    };
+  };
 }

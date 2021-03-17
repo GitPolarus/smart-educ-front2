@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import {HTTP_INTERCEPTORS, HttpEvent, HttpHandler, HttpInterceptor, HttpRequest, HttpResponse} from '@angular/common/http';
 import {Observable} from 'rxjs';
-import {LoaderService} from '../services/loader.service';
-import {AuthInterceptor} from './auth.interceptor';
+import {LoaderService} from './loader.service';
+import {AuthInterceptor} from '../helpers/auth.interceptor';
 
 @Injectable({
   providedIn: 'root'

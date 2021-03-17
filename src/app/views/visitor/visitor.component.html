@@ -1,0 +1,11 @@
+<p-menubar [model]="items">
+  <ng-template pTemplate="start">
+    <p-avatar label="Se" size="large" shape="circle"></p-avatar>
+  </ng-template>
+  <ng-template pTemplate="end">
+      <input type="text" pInputText placeholder="Search" class="p-mr-2">
+      <p-button *ngIf="isLogin" type="button" label="Logout" icon="pi pi-fw pi-sign-out" (onClick)='logout()'  class="p-mx-auto"></p-button>
+      <p-button  *ngIf="!isLogin" type="button" label="Login" icon="pi pi-fw pi-sign-in" class="p-mx-auto" routerLink="/login" ></p-button>
+  </ng-template>
+</p-menubar>
+<router-outlet></router-outlet>
