@@ -1,3 +1,6 @@
+import { HomeComponent } from './pages/home/home.component';
+import { SidebarComponent } from './components/sidebar/sidebar.component';
+import { FooterComponent } from './components/footer/footer.component';
 import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -19,6 +22,9 @@ import { PageNotFoundComponent } from './pages/page-not-found/page-not-found.com
 
 import { AccordionModule } from 'primeng/accordion';
 import { MenubarModule } from 'primeng/menubar';
+import { MenuModule } from 'primeng/menu';
+import { MegaMenuModule } from 'primeng/megamenu';
+import { PanelMenuModule } from 'primeng/panelmenu';
 import { InputTextModule } from 'primeng/inputtext';
 import { PasswordModule } from 'primeng/password';
 import { ButtonModule } from 'primeng/button';
@@ -28,7 +34,17 @@ import { CheckboxModule } from 'primeng/checkbox';
 import { RadioButtonModule } from 'primeng/radiobutton';
 import { RippleModule } from 'primeng/ripple';
 import { AvatarModule } from 'primeng/avatar';
+import { ToolbarModule } from 'primeng/toolbar';
+import {BreadcrumbModule} from 'primeng/breadcrumb';
+import {ToastModule} from 'primeng/toast';
+import {TableModule} from 'primeng/table';
+import {DialogModule} from 'primeng/dialog';
+import {PanelModule} from 'primeng/panel';
+import {ContextMenuModule} from 'primeng/contextmenu';
+import {ProgressSpinnerModule} from 'primeng/progressspinner';
 import { AvatarGroupModule } from 'primeng/avatargroup';
+import { NavbarComponent } from './components/navbar/navbar.component';
+import { AdminComponent } from './views/admin/admin.component';
 
 @NgModule({
   declarations: [
@@ -38,6 +54,11 @@ import { AvatarGroupModule } from 'primeng/avatargroup';
     VisitorComponent,
     PageNotFoundComponent,
     NewUserComponent,
+    NavbarComponent,
+    FooterComponent,
+    SidebarComponent,
+    AdminComponent,
+    HomeComponent
   ],
   imports: [
     BrowserModule,
@@ -48,6 +69,7 @@ import { AvatarGroupModule } from 'primeng/avatargroup';
     AccordionModule,
     BrowserAnimationsModule,
     MenubarModule,
+    SidebarModule,
     InputTextModule,
     ButtonModule,
     SidebarModule,
@@ -58,6 +80,17 @@ import { AvatarGroupModule } from 'primeng/avatargroup';
     AvatarGroupModule,
     AvatarModule,
     PasswordModule,
+    MenuModule,
+    PanelMenuModule,
+    MegaMenuModule,
+    BreadcrumbModule,
+    ToastModule,
+    ToolbarModule,
+    TableModule,
+    ProgressSpinnerModule,
+    DialogModule,
+    PanelModule,
+    ContextMenuModule,
   ],
   providers: [loaderInterceptorProviders, authInterceptorProviders],
   bootstrap: [AppComponent],

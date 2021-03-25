@@ -1,3 +1,5 @@
+import { HomeComponent } from './pages/home/home.component';
+import { AdminComponent } from './views/admin/admin.component';
 import { ListSyllabusComponent } from './pages/syllabi/list-syllabus/list-syllabus.component';
 import { Routes, RouterModule } from '@angular/router';
 import { UserFormModalComponent } from './pages/modal/user-form-modal/user-form-modal.component';
@@ -9,12 +11,23 @@ import { NgModule } from '@angular/core';
 
 const routes: Routes = [
   { path: '', component: VisitorComponent ,
-    children:[
+    children: [
       {
-        path: 'home', component: NewUserComponent ,
+        path: 'home', component: HomeComponent ,
       },
       {
         path: 'login', component: LoginComponent ,
+      },
+      {
+        path: 'syllabi', component: ListSyllabusComponent ,
+      }
+    ]
+  },
+
+  { path: 'admin', component: AdminComponent ,
+    children:[
+      {
+        path: 'users', component: NewUserComponent ,
       },
       {
         path: 'syllabi', component: ListSyllabusComponent ,

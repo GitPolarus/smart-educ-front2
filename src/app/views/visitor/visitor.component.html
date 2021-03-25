@@ -1,11 +1,20 @@
 <p-menubar [model]="items">
   <ng-template pTemplate="start">
-    <p-avatar label="Se" size="large" shape="circle"></p-avatar>
+    <p-avatar label="SE" size="large" shape="circle" class="p-mr-2" [style]="{'background-color':'#2196F3', 'color': '#ffffff'}" routerLink="/home"></p-avatar>
   </ng-template>
   <ng-template pTemplate="end">
-      <input type="text" pInputText placeholder="Search" class="p-mr-2">
-      <p-button *ngIf="isLogin" type="button" label="Logout" icon="pi pi-fw pi-sign-out" (onClick)='logout()'  class="p-mx-auto"></p-button>
-      <p-button  *ngIf="!isLogin" type="button" label="Login" icon="pi pi-fw pi-sign-in" class="p-mx-auto" routerLink="/login" ></p-button>
+    <button pButton pRipple *ngIf="isAdmin" type="button" label="Admin Board" class="p-button-rounded p-mr-2" routerLink="/admin" ></button>
+      <p-button *ngIf="isLogin"  label="Logout" icon="pi pi-fw pi-sign-out" styleClass="p-button-danger p-button-rounded" (onClick)='logout()'></p-button>
+      <button pButton pRipple *ngIf="!isLogin" type="button" label="Login" icon="pi pi-fw pi-sign-in" class="p-button-rounded" routerLink="/login" ></button>
   </ng-template>
 </p-menubar>
+<!-- <app-navbar></app-navbar> -->
 <router-outlet></router-outlet>
+<app-loader></app-loader>
+<footer class="footer">
+  <div class="float-right d-none d-sm-block">
+    <b>Version</b> 1.0
+  </div>
+  <strong>Copyright &copy; 2019-2021 <a href="https://uir.ac.ma">ESIN-UIR</a>.</strong> All rights reserved.
+</footer>
+

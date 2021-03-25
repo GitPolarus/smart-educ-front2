@@ -27,13 +27,13 @@ export class AuthService {
         this.saveUser(this.user);
         console.log(this.user);
 
-        // if (this.isUserAdmin()) {
-        //   this.redirectUrl = '/home';
-        // } else {
-        //   this.redirectUrl = '/home';
-        // }
+        if (this.isUserAdmin()) {
+          this.redirectUrl = '/admin';
+        } else {
+          this.redirectUrl = '/home';
+        }
 
-        this.router.navigate(['/home']).then(() => {this.reloadPage(); });
+        this.router.navigate([this.redirectUrl]).then(() => {this.reloadPage(); });
 
         this.isLoggedIn = true;
       },
@@ -83,10 +83,10 @@ export class AuthService {
     // tslint:disable-next-line: prefer-for-of
     for (let index = 0; index < roles.length; index++) {
       const role = roles[index];
-      if (role.name === r) {
+      if (role.name == r) {
         return role.name;
       } else {
-        return ' ';
+        continue;
       }
     }
   }

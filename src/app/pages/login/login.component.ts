@@ -2,6 +2,7 @@ import { UserAccount } from './../../models/useraccount.model';
 import { Router } from '@angular/router';
 import { AuthService } from './../../services/auth.service';
 import { Component, OnInit } from '@angular/core';
+import { MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-login',
@@ -13,6 +14,8 @@ export class LoginComponent implements OnInit {
   isLoginFailed: boolean;
   isLoggedIn = false;
   user: UserAccount;
+  message: string;
+  public rememberMe = false;
 
   constructor(public authService: AuthService, public router: Router) {}
 
@@ -31,6 +34,12 @@ export class LoginComponent implements OnInit {
   public onSubmit(): void {
     console.log(this.user);
 
-    this.authService.login(this.user);
+    if (this.authService.login(this.user)) {
+      this.message = 'Authentication failed';
+      // this.msgService.add({severity: 'error', summary: 'Sign In', detail: this.message});
+    }else{
+      this.message = 'Sucessfull authentication';
+      // this.msgService.add({severity: 'success', summary: 'Sign In', detail: this.message});
+    }
   }
 }

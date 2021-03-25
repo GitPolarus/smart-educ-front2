@@ -1,49 +1,48 @@
+<div class="hold-transition login-page">
+<div class="login-box">
+  <div class="login-logo">
+    <a>Smart Education</a>
+  </div>
+  <!-- /.login-logo -->
+  <div class="card">
+    <div class="card-body login-card-body">
+      <p class="login-box-msg">Sign in to start your session</p>
 
-<div class="limiter">
-  <div class="container-login100">
-    <div class="wrap-login100 p-t-85 p-b-20">
-      <form class="login100-form validate-form"  name="form" (ngSubmit)="f.form.valid && onSubmit()" #f="ngForm" novalidate>
-					<span class="login100-form-title p-b-70">
-						Authentification
-					</span>
-        <span class="login100-form-avatar">
-						<img src="assets/images/profile.png" alt="AVATAR">
-        </span>
+      <form (ngSubmit)="onSubmit()" #form="ngForm">
 
+        <div class="p-fluid">
+          <div class="p-field">
+              <label for="firstname1">Email</label>
+              <span class="p-input-icon-left">
+                <i class="pi pi-envelope"></i>
+              <input id="firstname1" type="email" name="email" [(ngModel)]="user.email" pInputText>
+              </span>
+          </div>
+          <div class="p-field">
+              <label for="lastname1">Password</label>
+              <span class="p-input-icon-left">
+                <i class="pi pi-lock"></i>
+              <p-password id="lastname1" [toggleMask]="true" [feedback]=false name="password" [(ngModel)]="user.password"></p-password>
+              </span>
+          </div>
+      </div>
 
-
-
-        <div class="p-fluid p-mx-auto">
-          <div class="p-mx-auto p-pb-4">
-            <label for="float-input">Username</label>
-            <input id="float-input" name="email" [(ngModel)]="user.email" type="email" placeholder="Email" class="ng-dirty ng-invalid p-mr-2" pInputText>
-        </div>
-
-        <div>
-          <label for="password">Mot de passe</label>
-          <p-password id="password" name="password" [(ngModel)]="user.password" [toggleMask]="true" [feedback]="false"></p-password>
-        </div>
-          <!-- <input id="password" type="password" class="form-control  input100 wrap-input100" name="password" [(ngModel)]="user.password" #password="ngModel"
-                 required minlength="3" />
-          <div *ngIf="f.submitted && password.invalid">
-            <div class="label_alert" *ngIf="password.errors.required">Mot de passe Obligatoire</div>
-            <div class="label_alert" *ngIf="password.errors.minlength">Password must be at least 3 characters</div>
-          </div> -->
-        </div>
-
-
-        <div class="container-login100-form-btn">
-          <button class="btn login100-form-btn">
-            Login
-          </button>
+        <div class="row">
+          <div class="col-8">
+            <div class="p-field-checkbox">
+              <p-checkbox [(ngModel)]="rememberMe" binary="true" name="rememberMe" inputId="binary"></p-checkbox>
+              <label for="binary">Remember Me</label>
+          </div>
+          </div>
+          <!-- /.col -->
+          <div class="col-4">
+            <button pButton pRipple type="submit" label="Sign In" class="p-button-raised  p-button-rounded"></button>
+          </div>
+          <!-- /.col -->
         </div>
       </form>
     </div>
+    <!-- /.login-card-body -->
   </div>
 </div>
-
-
-
-
-
-
+</div>

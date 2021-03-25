@@ -9,15 +9,20 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./visitor.component.scss'],
 })
 export class VisitorComponent implements OnInit {
+  boards: MenuItem[];
   items: MenuItem[];
   isLogin = false;
+  isAdmin = false;
 
   constructor(private authService: AuthService){
     this.isLogin = authService.isUserLogged();
-    console.log(this.isLogin);
   }
 
   ngOnInit() {
+
+    if (this.isLogin) {
+      this.isAdmin = this.authService.isUserAdmin();
+    }
 
     this.items = [
       {
@@ -31,9 +36,21 @@ export class VisitorComponent implements OnInit {
         routerLink: '/syllabi',
       },
     ];
+
+    this.boards = [
+      {label: 'Update', icon: 'pi pi-refresh', command: () => {
+          // this.update();
+      }},
+      {label: 'Delete', icon: 'pi pi-times', command: () => {
+          // this.delete();
+      }},
+      {label: 'Angular.io', icon: 'pi pi-info', url: 'http://angular.io'},
+      {separator: true},
+      {label: 'Setup', icon: 'pi pi-cog', routerLink: ['/setup']}
+  ];
   }
 
-  logout() {
+  public logout(): void {
     console.log('logout');
 
     this.authService.logout();

@@ -30,12 +30,23 @@
             "styles": [
               "src/styles.scss",
               "./node_modules/primeflex/primeflex.css",
+              "node_modules/bootstrap/dist/css/bootstrap.css",
 
               "node_modules/primeng/resources/themes/saga-blue/theme.css",
               "node_modules/primeng/resources/primeng.min.css",
-              "node_modules/primeicons/primeicons.css"
+              "node_modules/primeicons/primeicons.css",
+              "node_modules/admin-lte/dist/css/adminlte.min.css",
+              "node_modules/admin-lte/plugins/fontawesome-free/css/all.min.css",
+              "node_modules/admin-lte/plugins/toastr/toastr.min.css",
+              "node_modules/admin-lte/plugins/sweetalert2/sweetalert2.min.css"
             ],
-            "scripts": ["../node_modules/chart.js/dist/Chart.js"]
+            "scripts": [
+              "node_modules/admin-lte/plugins/jquery/jquery.min.js",
+              "node_modules/bootstrap/dist/js/bootstrap.js",
+              "../node_modules/chart.js/dist/Chart.js",
+              "node_modules/admin-lte/plugins/bootstrap/js/bootstrap.bundle.min.js",
+              "node_modules/admin-lte/dist/js/adminlte.min.js",
+            ]
           },
           "configurations": {
             "production": {
