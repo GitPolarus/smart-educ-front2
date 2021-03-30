@@ -1,8 +1,10 @@
+import { MessageService } from 'primeng/api';
 import { Role } from './../models/role.model';
-import { Injectable } from '@angular/core';
+import { Injectable, NgModule } from '@angular/core';
 import { CatalogueService } from './catalogue.service';
 import { Router } from '@angular/router';
 import { UserAccount } from '../models/useraccount.model';
+import { Component } from '@angular/core';
 
 const TOKEN_KEY = 'auth-token';
 const USER_KEY = 'auth-user';
@@ -17,7 +19,10 @@ export class AuthService {
   isLoggedIn = false;
   // store the URL so we can redirect after logging in
   redirectUrl: string;
-  constructor(private catService: CatalogueService, private router: Router) {}
+  constructor(
+    private catService: CatalogueService,
+    private router: Router,
+  ) {}
 
   login(form: UserAccount): boolean {
     this.catService.postResource('auth/signin', form).subscribe(
@@ -33,12 +38,16 @@ export class AuthService {
           this.redirectUrl = '/home';
         }
 
-        this.router.navigate([this.redirectUrl]).then(() => {this.reloadPage(); });
+        this.router.navigate([this.redirectUrl]).then(() => {
+          this.reloadPage();
+        });
 
         this.isLoggedIn = true;
       },
       (err) => {
         console.log(err);
+        // this.show = false;
+        // console.log('failed authentication');
         this.isLoggedIn = false;
       }
     );
@@ -49,7 +58,9 @@ export class AuthService {
   public logout(): void {
     this.isLoggedIn = false;
     this.signOut();
-    this.router.navigateByUrl('/login').then(() => {this.reloadPage(); });
+    this.router.navigateByUrl('/login').then(() => {
+      this.reloadPage();
+    });
   }
 
   reloadPage(): void {

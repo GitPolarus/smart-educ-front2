@@ -1,3 +1,4 @@
+import { CatalogueService } from './../../services/catalogue.service';
 import { UserAccount } from './../../models/useraccount.model';
 import { Router } from '@angular/router';
 import { AuthService } from './../../services/auth.service';
@@ -8,6 +9,7 @@ import { MessageService } from 'primeng/api';
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss'],
+  providers: [MessageService],
 })
 export class LoginComponent implements OnInit {
   form: any = {};
@@ -16,8 +18,14 @@ export class LoginComponent implements OnInit {
   user: UserAccount;
   message: string;
   public rememberMe = false;
+  redirectUrl: string;
 
-  constructor(public authService: AuthService, public router: Router) {}
+  constructor(
+    public authService: AuthService,
+    public router: Router,
+    public msgService: MessageService,
+    private catService: CatalogueService
+  ) {}
 
   ngOnInit(): void {
     this.user = new UserAccount();
@@ -32,14 +40,37 @@ export class LoginComponent implements OnInit {
   }
 
   public onSubmit(): void {
-    console.log(this.user);
+    this.catService.postResource('auth/signin', this.user).subscribe(
+      (data: any) => {
+        this.user = data;
+        this.authService.saveToken(this.user.token);
+        this.authService.saveUser(this.user);
+        console.log(this.user);
 
-    if (this.authService.login(this.user)) {
-      this.message = 'Authentication failed';
-      // this.msgService.add({severity: 'error', summary: 'Sign In', detail: this.message});
-    }else{
-      this.message = 'Sucessfull authentication';
-      // this.msgService.add({severity: 'success', summary: 'Sign In', detail: this.message});
-    }
+        if (this.authService.isUserAdmin()) {
+          this.redirectUrl = '/admin';
+        } else {
+          this.redirectUrl = '/home';
+        }
+
+        this.router.navigate([this.redirectUrl]).then(() => {
+          window.location.reload();
+        });
+
+        this.isLoggedIn = true;
+      },
+      (err) => {
+        // console.log(err);
+        this.message =
+          'Authentication failed, please check your Email or password ';
+        this.msgService.add({
+          key: 'login',
+          severity: 'error',
+          summary: 'Sign In',
+          detail: this.message,
+        });
+        this.isLoggedIn = false;
+      }
+    );
   }
 }

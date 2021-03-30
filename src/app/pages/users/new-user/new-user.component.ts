@@ -1,5 +1,5 @@
 import { AuthService } from './../../../services/auth.service';
-import { MessageService, MenuItem } from 'primeng/api';
+import { MessageService, MenuItem, ConfirmationService } from 'primeng/api';
 import { SignUpRequest } from './../../../models/signup.model';
 import { Role } from './../../../models/role.model';
 import { CatalogueService } from './../../../services/catalogue.service';
@@ -10,7 +10,7 @@ import { Component, OnInit } from '@angular/core';
   selector: 'app-new-user',
   templateUrl: './new-user.component.html',
   styleUrls: ['./new-user.component.scss'],
-  providers: [MessageService],
+  providers: [MessageService, ConfirmationService],
 })
 export class NewUserComponent implements OnInit {
   users: UserAccount[];
@@ -24,8 +24,10 @@ export class NewUserComponent implements OnInit {
   coordinatorRole = false;
   instructorRole = false;
   sendEmail = false;
+  submitted = false;
   display = false;
   items: MenuItem[];
+  exportColumns: any[];
 
   showDialog(): void {
     this.display = true;
@@ -34,7 +36,8 @@ export class NewUserComponent implements OnInit {
   constructor(
     private authService: AuthService,
     private catService: CatalogueService,
-    private msgService: MessageService
+    private msgService: MessageService,
+    private confirmationService: ConfirmationService
   ) {}
 
   ngOnInit(): void {
@@ -43,9 +46,11 @@ export class NewUserComponent implements OnInit {
 
     this.items = [
       { label: 'Detail', icon: 'pi pi-fw pi-search' },
-      { label: 'Update', icon: 'pi pi-fw pi-pencil',
-      command: () => this.updateUser(this.selectedUser),
-     },
+      {
+        label: 'Update',
+        icon: 'pi pi-fw pi-pencil',
+        command: () => this.editUser(this.selectedUser),
+      },
       {
         label: 'Delete',
         icon: 'pi pi-fw pi-times',
@@ -54,38 +59,56 @@ export class NewUserComponent implements OnInit {
     ];
   }
 
-  deleteUser(user: UserAccount): void {
+  deleteUser(user: any): void {
     this.selectedUser = user;
-    console.log(this.selectedUser._links.self.href);
-    this.catService.delete(this.selectedUser._links.self.href).subscribe(
-      (data: any) => {
-        this.getUsers();
-        // this.selectedUser = null;
-        this.displayMaximizable = false;
-        this.msgService.add({
-          severity: 'Delete User',
-          summary: 'New User',
-          detail: 'User Succefull deleted',
-        });
+
+    this.confirmationService.confirm({
+      message:
+        'Are you sure you want to delete ' +
+        this.selectedUser.lastName +
+        ' ' +
+        this.selectedUser.firstName +
+        '?',
+      header: 'Confirm',
+      icon: 'pi pi-exclamation-triangle',
+      accept: () => {
+        console.log(this.selectedUser._links.self.href);
+        this.catService
+          .deleteByUrl(this.selectedUser._links.self.href)
+          .subscribe(
+            (data: any) => {
+              this.getUsers();
+              // this.selectedUser = null;
+              this.displayMaximizable = false;
+              this.msgService.add({
+                severity: 'Delete User',
+                summary: 'New User',
+                detail: 'User Succefull deleted',
+              });
+            },
+            (err) => {
+              console.error(err);
+              this.msgService.add({
+                key: 'signup',
+                severity: 'error',
+                summary: 'New User',
+                detail: err.message,
+              });
+            }
+          );
       },
-      (err) => {
-        console.error(err);
-        this.msgService.add({
-          key: 'signup',
-          severity: 'error',
-          summary: 'New User',
-          detail: err.message,
-        });
-      }
-    );
+    });
   }
 
-  updateUser(user: any): void {
+  deleteSelectedUsers(): void {}
+
+  editUser(user: any): void {
     this.newUser = user;
-    this.showMaximizableDialog();
+    this.showModalDialog();
   }
 
-  public onSubmit(): void {
+  public saveUser(): void {
+    this.submitted = true;
     if (this.adminRole) {
       this.newUser.roles.push('admin');
     }
@@ -100,9 +123,9 @@ export class NewUserComponent implements OnInit {
     }
 
     this.newUser.createdBy = this.authService.getUser().email;
-    // console.log(this.newUser);
+    console.log(this.newUser);
 
-    this.catService.postResource('auth/signup', this.newUser).subscribe(
+    /* this.catService.postResource('auth/signup', this.newUser).subscribe(
       (data: any) => {
         console.log(data);
         this.getUsers();
@@ -124,7 +147,7 @@ export class NewUserComponent implements OnInit {
           detail: err.message,
         });
       }
-    );
+    ); */
   }
 
   public getUsers(): void {
@@ -143,10 +166,48 @@ export class NewUserComponent implements OnInit {
   public clear(): void {}
 
   showModalDialog(): void {
-    this.display = true;
-  }
-
-  showMaximizableDialog(): void {
     this.displayMaximizable = true;
   }
+  hideDialog(): void {
+    this.displayMaximizable = false;
+    this.newUser = new SignUpRequest();
+    this.adminRole = false;
+    this.coordinatorRole = false;
+    this.instructorRole = false;
+    this.sendEmail = false;
+    this.submitted = false;
+  }
+
+  exportPdf() {
+    // const doc = new jsPDF();
+    // // doc.autoTable(this.exportColumns, this.users);
+    // // doc.autoTable(this.exportColumns, this.users);
+    // doc.save('users.pdf');
+  }
+
+  /*  exportExcel() {
+    import('xlsx').then((xlsx) => {
+      const worksheet = xlsx.utils.json_to_sheet(this.users);
+      const workbook = { Sheets: { data: worksheet }, SheetNames: ['data'] };
+      const excelBuffer: any = xlsx.write(workbook, {
+        bookType: 'xlsx',
+        type: 'array',
+      });
+      this.saveAsExcelFile(excelBuffer, 'products');
+    });
+  }
+  saveAsExcelFile(buffer: any, fileName: string): void {
+    import('file-saver').then((FileSaver) => {
+      let EXCEL_TYPE =
+        'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8';
+      let EXCEL_EXTENSION = '.xlsx';
+      const data: Blob = new Blob([buffer], {
+        type: EXCEL_TYPE,
+      });
+      FileSaver.saveAs(
+        data,
+        fileName + '_export_' + new Date().getTime() + EXCEL_EXTENSION
+      );
+    });
+  } */
 }

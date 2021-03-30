@@ -30,7 +30,11 @@ export class CatalogueService {
     return this.http.put(resourceUrl, data);
   }
 
-  delete(url: string): Observable<any> {
+  deleteByUrl(url: string): Observable<any> {
     return this.http.delete(url);
+  }
+
+  delete(url: string, data:any): Observable<any> {
+    return this.http.delete(this.baseUrl+url, data);
   }
 }

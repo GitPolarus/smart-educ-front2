@@ -1,48 +1,62 @@
+<p-toast key="login" ></p-toast><!-- Toast -->
+<p-message></p-message>
+
 <div class="hold-transition login-page">
-<div class="login-box">
-  <div class="login-logo">
-    <a>Smart Education</a>
-  </div>
-  <!-- /.login-logo -->
-  <div class="card">
-    <div class="card-body login-card-body">
-      <p class="login-box-msg">Sign in to start your session</p>
+  <div class="login-box">
+    <div class="login-logo">
+      <a>Smart Education</a>
+    </div>
+    <!-- /.login-logo -->
+    <div class="card">
+      <div class="card-body login-card-body">
+        <p class="login-box-msg">Sign in to start your session</p>
 
-      <form (ngSubmit)="onSubmit()" #form="ngForm">
-
-        <div class="p-fluid">
-          <div class="p-field">
+        <form (ngSubmit)="onSubmit()" #form="ngForm">
+          <p-message *ngIf(show) severity="error" text="{{message}}"></p-message>
+          <div class="p-fluid">
+            <div class="p-field">
               <label for="firstname1">Email</label>
               <span class="p-input-icon-left">
                 <i class="pi pi-envelope"></i>
-              <input id="firstname1" type="email" name="email" [(ngModel)]="user.email" pInputText>
+                <input id="firstname1" type="email" name="email" [(ngModel)]="user.email" email="true" #email="ngModel"
+                  class="form-control  ng-pristine ng-valid" required pInputText>
               </span>
-          </div>
-          <div class="p-field">
-              <label for="lastname1">Password</label>
+              <div [hidden]="email.valid || password.pristine" class="alert alert-danger">
+                Valid Email is required
+              </div>
+            </div>
+            <div class="p-field">
+              <label for="password">Password</label>
               <span class="p-input-icon-left">
                 <i class="pi pi-lock"></i>
-              <p-password id="lastname1" [toggleMask]="true" [feedback]=false name="password" [(ngModel)]="user.password"></p-password>
+                <input id="password" name="password" [feedback]="false" [(ngModel)]="user.password" #password="ngModel"
+                  class="form-control ng-untouched ng-pristine ng-valid" type="password" required pPassword />
               </span>
-          </div>
-      </div>
+              <div [hidden]="password.valid || password.pristine " class="alert alert-danger">
+                Password is required
+              </div>
+            </div>
 
-        <div class="row">
-          <div class="col-8">
-            <div class="p-field-checkbox">
-              <p-checkbox [(ngModel)]="rememberMe" binary="true" name="rememberMe" inputId="binary"></p-checkbox>
-              <label for="binary">Remember Me</label>
+
           </div>
+
+          <div class="row">
+            <div class="col-8">
+              <div class="p-field-checkbox">
+                <p-checkbox [(ngModel)]="rememberMe" binary="true" name="rememberMe" inputId="binary"></p-checkbox>
+                <label for="binary">Remember Me</label>
+              </div>
+            </div>
+            <!-- /.col -->
+            <div class="col-4">
+              <button pButton pRipple type="submit" label="Sign In" class="p-button-raised  p-button-rounded"
+                [disabled]="!form.form.valid"></button>
+            </div>
+            <!-- /.col -->
           </div>
-          <!-- /.col -->
-          <div class="col-4">
-            <button pButton pRipple type="submit" label="Sign In" class="p-button-raised  p-button-rounded"></button>
-          </div>
-          <!-- /.col -->
-        </div>
-      </form>
+        </form>
+      </div>
+      <!-- /.login-card-body -->
     </div>
-    <!-- /.login-card-body -->
   </div>
-</div>
 </div>

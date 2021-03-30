@@ -22,6 +22,8 @@ import { PageNotFoundComponent } from './pages/page-not-found/page-not-found.com
 
 import { AccordionModule } from 'primeng/accordion';
 import { MenubarModule } from 'primeng/menubar';
+import { MessageModule } from 'primeng/message';
+import { MessagesModule } from 'primeng/messages';
 import { MenuModule } from 'primeng/menu';
 import { MegaMenuModule } from 'primeng/megamenu';
 import { PanelMenuModule } from 'primeng/panelmenu';
@@ -35,6 +37,7 @@ import { RadioButtonModule } from 'primeng/radiobutton';
 import { RippleModule } from 'primeng/ripple';
 import { AvatarModule } from 'primeng/avatar';
 import { ToolbarModule } from 'primeng/toolbar';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import {BreadcrumbModule} from 'primeng/breadcrumb';
 import {ToastModule} from 'primeng/toast';
 import {TableModule} from 'primeng/table';
@@ -91,6 +94,9 @@ import { AdminComponent } from './views/admin/admin.component';
     DialogModule,
     PanelModule,
     ContextMenuModule,
+    ConfirmDialogModule,
+    MessageModule,
+    MessagesModule,
   ],
   providers: [loaderInterceptorProviders, authInterceptorProviders],
   bootstrap: [AppComponent],
