@@ -1,3 +1,9 @@
+import { NewSyllabusComponent } from './pages/syllabi/new-syllabus/new-syllabus.component';
+import { UserProfileComponent } from './pages/users/user-profile/user-profile.component';
+import { PortfolioListComponent } from './pages/portfolios/portfolio-list/portfolio-list.component';
+import { ManageSyllabiComponent } from './pages/syllabi/manage-syllabi/manage-syllabi.component';
+import { NewSemesterComponent } from './pages/semesters/new-semester/new-semester.component';
+import { NewCourseComponent } from './pages/courses/new-course/new-course.component';
 import { HomeComponent } from './pages/home/home.component';
 import { AdminComponent } from './views/admin/admin.component';
 import { ListSyllabusComponent } from './pages/syllabi/list-syllabus/list-syllabus.component';
@@ -13,6 +19,8 @@ const routes: Routes = [
   { path: '', component: VisitorComponent ,
     children: [
       {
+        path: '', component: HomeComponent ,
+      }, {
         path: 'home', component: HomeComponent ,
       },
       {
@@ -30,7 +38,25 @@ const routes: Routes = [
         path: 'users', component: NewUserComponent ,
       },
       {
+        path: 'courses', component: NewCourseComponent ,
+      },
+      {
+        path: 'semesters', component: NewSemesterComponent ,
+      },
+      {
         path: 'syllabi', component: ListSyllabusComponent ,
+      } ,
+      {
+        path: 'manage_syllabi', component: ManageSyllabiComponent ,
+      } ,
+      {
+        path: 'new_syllabus', component: NewSyllabusComponent ,
+      } ,
+      {
+        path: 'portfolios', component: PortfolioListComponent ,
+      } ,
+      {
+        path: 'user_profile', component: UserProfileComponent ,
       }
     ]
   },

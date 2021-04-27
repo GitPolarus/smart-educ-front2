@@ -4,6 +4,7 @@ export class UserAccount {
   id: number;
   firstName: string;
   lastName: string;
+  fullName: string;
   email: string;
   sendEmail = false;
   password: string;
@@ -21,15 +22,15 @@ export class UserAccount {
   _links: {
     self: {
       href: string;
-    };
+    },
     roles: {
       href: string;
-    };
+    },
     portfolio: {
       href: string;
-    };
+    },
     userProfile: {
       href: string;
-    };
+    },
   };
 }

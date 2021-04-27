@@ -1,3 +1,9 @@
+import { NewSyllabusComponent } from './pages/syllabi/new-syllabus/new-syllabus.component';
+import { UserProfileComponent } from './pages/users/user-profile/user-profile.component';
+import { PortfolioListComponent } from './pages/portfolios/portfolio-list/portfolio-list.component';
+import { ManageSyllabiComponent } from './pages/syllabi/manage-syllabi/manage-syllabi.component';
+import { NewSemesterComponent } from './pages/semesters/new-semester/new-semester.component';
+import { NewCourseComponent } from './pages/courses/new-course/new-course.component';
 import { HomeComponent } from './pages/home/home.component';
 import { SidebarComponent } from './components/sidebar/sidebar.component';
 import { FooterComponent } from './components/footer/footer.component';
@@ -38,16 +44,22 @@ import { RippleModule } from 'primeng/ripple';
 import { AvatarModule } from 'primeng/avatar';
 import { ToolbarModule } from 'primeng/toolbar';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
-import {BreadcrumbModule} from 'primeng/breadcrumb';
-import {ToastModule} from 'primeng/toast';
-import {TableModule} from 'primeng/table';
-import {DialogModule} from 'primeng/dialog';
-import {PanelModule} from 'primeng/panel';
-import {ContextMenuModule} from 'primeng/contextmenu';
-import {ProgressSpinnerModule} from 'primeng/progressspinner';
+import { BreadcrumbModule } from 'primeng/breadcrumb';
+import { ToastModule } from 'primeng/toast';
+import { TableModule } from 'primeng/table';
+import { DialogModule } from 'primeng/dialog';
+import { PanelModule } from 'primeng/panel';
+import { ContextMenuModule } from 'primeng/contextmenu';
+import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { AvatarGroupModule } from 'primeng/avatargroup';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { AdminComponent } from './views/admin/admin.component';
+import { DropdownModule } from 'primeng/dropdown';
+import { InputNumberModule } from 'primeng/inputnumber';
+import { StepsModule } from 'primeng/steps';
+import { FieldsetModule } from 'primeng/fieldset';
+import { ChipsModule } from 'primeng/chips';
+import { AutoCompleteModule } from 'primeng/autocomplete';
 
 @NgModule({
   declarations: [
@@ -61,7 +73,13 @@ import { AdminComponent } from './views/admin/admin.component';
     FooterComponent,
     SidebarComponent,
     AdminComponent,
-    HomeComponent
+    HomeComponent,
+    NewCourseComponent,
+    NewSemesterComponent,
+    ManageSyllabiComponent,
+    PortfolioListComponent,
+    UserProfileComponent,
+    NewSyllabusComponent,
   ],
   imports: [
     BrowserModule,
@@ -97,6 +115,12 @@ import { AdminComponent } from './views/admin/admin.component';
     ConfirmDialogModule,
     MessageModule,
     MessagesModule,
+    DropdownModule,
+    InputNumberModule,
+    StepsModule,
+    FieldsetModule,
+    ChipsModule,
+    AutoCompleteModule,
   ],
   providers: [loaderInterceptorProviders, authInterceptorProviders],
   bootstrap: [AppComponent],

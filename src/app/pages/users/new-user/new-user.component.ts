@@ -27,6 +27,8 @@ export class NewUserComponent implements OnInit {
   submitted = false;
   display = false;
   items: MenuItem[];
+  update = false;
+  header: string;
   exportColumns: any[];
 
   showDialog(): void {
@@ -103,10 +105,54 @@ export class NewUserComponent implements OnInit {
   deleteSelectedUsers(): void {}
 
   editUser(user: any): void {
-    this.newUser = user;
-    this.showModalDialog();
+    this.update = true;
+    this.newUser = new SignUpRequest();
+    this.newUser.email = user.email;
+    this.newUser.createdBy = this.authService.getUser().email;
+    this.newUser.firstName = user.firstName;
+    this.newUser.lastName = user.lastName;
+    this.header = 'Update User ' + this.newUser.email;
+    this.displayMaximizable = true;
+    // this.showModalDialog();
   }
 
+  updateUser(): void {
+    this.newUser.createdBy = this.authService.getUser().email;
+    console.log(this.newUser);
+    this.catService.postResource('auth/update', this.newUser).subscribe(
+      (data: any) => {
+        console.log(data);
+        this.getUsers();
+        this.newUser = new SignUpRequest();
+        this.displayMaximizable = false;
+        this.msgService.add({
+          key: 'signup',
+          severity: 'success',
+          summary: 'Update User',
+          detail: 'User Succefull Updated',
+        });
+      },
+      (err) => {
+        console.error(err);
+        this.msgService.add({
+          key: 'signup',
+          severity: 'error',
+          summary: 'Update User',
+          detail: err.message,
+        });
+      }
+    );
+  }
+
+  onSave(): void {
+    console.log(this.update);
+
+    if (this.update == true) {
+      this.updateUser();
+    } else {
+      this.saveUser();
+    }
+  }
   public saveUser(): void {
     this.submitted = true;
     if (this.adminRole) {
@@ -125,7 +171,7 @@ export class NewUserComponent implements OnInit {
     this.newUser.createdBy = this.authService.getUser().email;
     console.log(this.newUser);
 
-    /* this.catService.postResource('auth/signup', this.newUser).subscribe(
+    this.catService.postResource('auth/signup', this.newUser).subscribe(
       (data: any) => {
         console.log(data);
         this.getUsers();
@@ -147,7 +193,7 @@ export class NewUserComponent implements OnInit {
           detail: err.message,
         });
       }
-    ); */
+    );
   }
 
   public getUsers(): void {
@@ -166,6 +212,8 @@ export class NewUserComponent implements OnInit {
   public clear(): void {}
 
   showModalDialog(): void {
+    this.header = 'New User';
+    this.update = false;
     this.displayMaximizable = true;
   }
   hideDialog(): void {

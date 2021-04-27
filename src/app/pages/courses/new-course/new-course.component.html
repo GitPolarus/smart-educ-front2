@@ -1,0 +1,180 @@
+<p-confirmDialog [style]="{width: '450px'}"></p-confirmDialog>
+<!-- Toast -->
+<p-toast key="toast"></p-toast><!-- Toast -->
+<!-- Menu Context -->
+<p-contextMenu #cm [model]="items"></p-contextMenu>
+<!-- Toolbar -->
+<div class="p-grid p-formgrid">
+  <div class="p-col-12 p-mb-5">
+    <p-toolbar>
+      <div class="p-toolbar-group-left">
+        <p-button label="New" icon="pi pi-plus" class="p-button-success p-mr-2" (click)="newCourseDialog()"></p-button>
+        <!-- <p-button label="Update" icon="pi pi-pencil" styleClass="p-button-success"></p-button> -->
+        <button pButton pRipple label="Delete" icon="pi pi-trash" class="p-button-danger"
+          (click)="deleteSelectedCourses()" [disabled]="!selectedCourses || !selectedCourses.length"></button>
+        <i class="p-toolbar-separator pi pi-bars p-mr-2" style="vertical-align: middle"></i>
+      </div>
+
+      <div class="p-toolbar-group-right">
+        <button type="button" pButton pRipple icon="pi pi-file-o" class="p-mr-2" pTooltip="CSV"
+          tooltipPosition="bottom"></button>
+        <button type="button" pButton pRipple icon="pi pi-file-excel" class="p-button-success p-mr-2" pTooltip="XLS"
+          tooltipPosition="bottom"></button>
+        <button type="button" pButton pRipple icon="pi pi-file-pdf" class="p-button-warning p-mr-2" pTooltip="PDF"
+          tooltipPosition="bottom"></button>
+        <!-- <button type="button" pButton pRipple icon="pi pi-file-o" (click)="dt.exportCSV()" class="p-mr-2" pTooltip="CSV" tooltipPosition="bottom"></button> -->
+      </div>
+    </p-toolbar>
+  </div>
+
+  <p-dialog header="{{header}}" [(visible)]="displayDialog" [modal]="true" [style]="{width: '50vw'}"
+    [maximizable]="true" [baseZIndex]="10000" [breakpoints]="{'960px': '75vw'}" [draggable]="false" [resizable]="false">
+    <!-- Toast -->
+    <p-toast key="toast"></p-toast>
+    <form #form="ngForm" class="form">
+
+      <div class="p-fluid p-formgrid p-grid">
+        <div class="p-field p-col-6">
+          <label for="courseName">Course Name</label>
+          <input id="courseName" name="courseName" [(ngModel)]="newCourse.courseName" type="text" #courseName="ngModel"
+            class="form-control ng-untouched ng-pristine ng-valid" required pInputText>
+          <div [hidden]="courseName.valid || courseName.pristine" class="alert alert-danger">
+            Course Name is required
+          </div>
+        </div>
+
+        <div class="p-field p-col-6">
+          <label for="semesterNumber">Semester N°</label>
+          <p-inputNumber requiered name="semesterNumber" [(ngModel)]="newCourse.semesterNumber" [showButtons]="true"
+            inputId="minmax-buttons" [min]="1" [max]="10" #semesterNumber="ngModel">
+          </p-inputNumber>
+          <div [hidden]="semesterNumber.valid || semesterNumber.pristine" class="alert alert-danger">
+            Valid Semester number is required
+          </div>
+        </div>
+
+
+        <div *ngIf="newCourse.semesterNumber > 6" class="p-field p-col-12 p-mb-10">
+          <label for="facultyOption">Faculty Option</label>
+          <p-dropdown [options]="facultyOptions" [virtualScroll]="true" [itemSize]="31" name="facultyOption"
+            [(ngModel)]="selectedOption" placeholder="Select an Option" optionLabel="name" [showClear]="true"
+            #facultyOption="ngModel"></p-dropdown>
+        </div>
+        <div class="p-field p-col-12 p-mb-10">
+          <label for="facultyOption">Coordinator</label>
+          <p-dropdown [options]="users" [(ngModel)]="selectedUser" name="coordinator" placeholder="Select a Coordinator"
+            optionLabel="fullName" [showClear]="true"></p-dropdown>
+        </div>
+      </div>
+
+    </form>
+
+    <ng-template pTemplate="footer">
+      <button pButton pRipple label="Cancel" icon="pi pi-times" class="p-button-text" (click)="onCancel()"></button>
+      <button pButton pRipple label="Save" icon="pi pi-check" class="p-button-text" type="submit" (click)="onSave()"
+        [disabled]="!form.form.valid"></button>
+    </ng-template>
+  </p-dialog>
+
+  <div class="p-grid p-formgrid">
+    <!-- Tab of course list -->
+    <p-panel class="p-col-12">
+      <div class="card p-p-2">
+        <h5>Course List</h5>
+        <p-table #dt1 [value]="courses" [(selection)]="selectedCourses" dataKey="courseName" [rows]="10"
+          [(contextMenuSelection)]="selectedCourse" [contextMenu]="cm" [showCurrentPageReport]="true"
+          [rowsPerPageOptions]="[10,25,50]" [loading]="loading" styleClass="p-datatable-gridlines" [paginator]="true"
+          currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+          [globalFilterFields]="['courseName', 'facultyOption','semster']">
+          <ng-template pTemplate="caption">
+            <div class="p-d-flex">
+              <button pButton label="Clear" class="p-button-outlined" icon="pi pi-filter-slash"
+                (click)="clear(dt1)"></button>
+              <span class="p-input-icon-left p-ml-auto">
+                <i class="pi pi-search"></i>
+                <input pInputText type="text" (input)="dt1.filterGlobal($event.target.value, 'contains')"
+                  placeholder="Search keyword" />
+              </span>
+            </div>
+          </ng-template>
+          <ng-template pTemplate="header">
+            <tr>
+              <th style="width: 3rem">
+                <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+              </th>
+              <th pSortableColumn="courseName">
+                <div class="p-d-flex p-jc-between p-ai-center">
+                  Course Name
+                  <p-sortIcon field="courseName"></p-sortIcon>
+                  <p-columnFilter type="text" field="courseName" display="menu" class="p-ml-auto"></p-columnFilter>
+                </div>
+              </th>
+              <th pSortableColumn="facultyOption">
+                <div class="p-d-flex p-jc-between p-ai-center">
+                  Faculty Option
+                  <p-sortIcon field="facultyOption"></p-sortIcon>
+                  <p-columnFilter type="text" field="facultyOption" display="menu" class="p-ml-auto"></p-columnFilter>
+                </div>
+              </th>
+              <th pSortableColumn="semesterNumber">
+                <div class="p-d-flex p-jc-between p-ai-center">
+                  Semester
+                  <p-sortIcon field="semesterNumber"></p-sortIcon>
+                  <p-columnFilter type="text" field="semesterNumber" display="menu" class="p-ml-auto"></p-columnFilter>
+                </div>
+              </th>
+              <th pSortableColumn="opened">
+                <div class="p-d-flex p-jc-between p-ai-center">
+                  Opened
+                  <p-sortIcon field="opened"></p-sortIcon>
+                  <p-columnFilter type="text" field="opened" display="menu" class="p-ml-auto"></p-columnFilter>
+                </div>
+              </th>
+
+              <th pSortableColumn="creationDate">
+                <div class="p-d-flex p-jc-between p-ai-center">
+                  Creation Date
+                  <p-sortIcon field="creationDate"></p-sortIcon>
+                  <p-columnFilter type="date" field="creationDate" display="menu" class="p-ml-auto"></p-columnFilter>
+                </div>
+              </th>
+            </tr>
+          </ng-template>
+          <ng-template pTemplate="body" let-course>
+            <tr [pContextMenuRow]="course">
+              <td>
+                <p-tableCheckbox [value]="course"></p-tableCheckbox>
+              </td>
+              <td>
+                {{course.courseName}}
+              </td>
+              <td>
+                {{course.facultyOption}}
+              </td>
+
+              <td>
+                {{course.semesterNumber}}
+              </td>
+              <td>
+                {{course.opened}}
+              </td>
+              <td>
+                {{course.creationDate | date: 'MM/dd/yyyy'}}
+              </td>
+              <td>
+                <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success p-mr-2"
+                  (click)="editCourse(course)"></button>
+                <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-danger"
+                  (click)="deleteCourse(course)"></button>
+              </td>
+            </tr>
+          </ng-template>
+          <ng-template pTemplate="emptymessage">
+            <tr>
+              <td colspan="7">No customers found.</td>
+            </tr>
+          </ng-template>
+        </p-table>
+      </div>
+    </p-panel>
+  </div>

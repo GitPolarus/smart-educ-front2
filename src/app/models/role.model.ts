@@ -1,4 +1,4 @@
 export class Role{
     authority: string;
-    name:string;
+    name: string;
 }

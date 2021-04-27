@@ -1,6 +1,6 @@
 export class StudentOutcome{
-  id;
-  so;
+  id: number;
+  so: string;
   faculty;
 
 }

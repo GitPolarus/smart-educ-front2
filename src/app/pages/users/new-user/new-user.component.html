@@ -1,3 +1,20 @@
+<!-- Content Header (Page header) -->
+<section class="content-header">
+  <div class="container-fluid">
+    <div class="row mb-2">
+      <div class="col-sm-6">
+        <h1>Users</h1>
+      </div>
+      <div class="col-sm-6">
+        <ol class="breadcrumb float-sm-right">
+          <li class="breadcrumb-item"><a href="#">Home</a></li>
+          <li class="breadcrumb-item active">Manage Users</li>
+        </ol>
+      </div>
+    </div>
+  </div><!-- /.container-fluid -->
+</section>
+
 <!-- Confirmation Dialog -->
 <p-confirmDialog [style]="{width: '450px'}"></p-confirmDialog>
 <!-- Toast -->
@@ -7,7 +24,7 @@
 <!-- Menu Context -->
 <p-contextMenu #cm [model]="items"></p-contextMenu>
 <!--New user Modal -->
-<p-dialog header="New User" [(visible)]="displayMaximizable" [modal]="true" [style]="{width: '50vw'}"
+<p-dialog header="{{header}}" [(visible)]="displayMaximizable" [modal]="true" [style]="{width: '50vw'}"
   [maximizable]="true" [baseZIndex]="10000" [draggable]="false" [resizable]="false">
   <!-- Toast -->
   <p-toast key="signup"></p-toast>
@@ -37,33 +54,37 @@
       <div class="p-field p-col-12">
         <label for="email">Email</label>
         <input id="email" name="email" type="email" [(ngModel)]="newUser.email" email="true" #email="ngModel"
-          class="form-control ng-untouched ng-pristine ng-valid" required pInputText>
+          [disabled]="update" class="form-control ng-untouched ng-pristine ng-valid" required pInputText>
         <div [hidden]="email.valid || email.pristine" class="alert alert-danger">
           Valid Email is required
         </div>
       </div>
 
-      <div class="p-field p-col-6">
-        <label for="firstname">Roles</label>
-        <div class="p-field-checkbox ">
+      <div [hidden]="update" class="p-field p-col-12 p-fluid p-formgrid p-grid ">
+
+
+        <h5 class="p-field p-col-12">Roles</h5>
+        <div class="p-field-checkbox p-field p-col-12 p-md-4">
           <p-checkbox name="adminRole" [(ngModel)]="adminRole" inputId="adminRole"></p-checkbox>
           <label for="adminRole">Admin</label>
         </div>
-        <div class="p-field-checkbox  ">
+        <div class="p-field-checkbox  p-field p-col-12 p-md-4">
           <p-checkbox name="coordinatorRole" [(ngModel)]="coordinatorRole" inputId="coordinatorRole"></p-checkbox>
           <label for="coordinatorRole">Coordinator</label>
         </div>
-        <div class="p-field-checkbox ">
+        <div class="p-field-checkbox p-field p-col-12 p-md-4">
           <p-checkbox name="instructorRole" [(ngModel)]="instructorRole" inputId="instructorRole"></p-checkbox>
           <label for="instructorRole">Instructor</label>
         </div>
-      </div>
-      <div class="p-field p-col-6">
-        <label for="firstname">Other</label>
-        <div class="p-field-checkbox ">
-          <p-checkbox name="sendEmail" [(ngModel)]="sendEmail" inputId="sendEmail"></p-checkbox>
+
+
+        <h5 class="p-field p-col-12 ">Notify User</h5>
+        <div class="p-field-checkbox p-field p-col-12">
+          <p-checkbox name="sendEmail"  [(ngModel)]="sendEmail" inputId="sendEmail">
+          </p-checkbox>
           <label for="sendEmail">Send Email</label>
         </div>
+
       </div>
     </div>
 
@@ -71,12 +92,12 @@
 
   <ng-template pTemplate="footer">
     <button pButton pRipple label="Cancel" icon="pi pi-times" class="p-button-text" (click)="hideDialog()"></button>
-    <button pButton pRipple label="Save" icon="pi pi-check" class="p-button-text" type="submit" (click)="saveUser()"
+    <button pButton pRipple label="Save" icon="pi pi-check" class="p-button-text" type="submit" (click)="onSave()"
       [disabled]="!form.form.valid"></button>
   </ng-template>
 </p-dialog>
 
-<!-- Toolbar -->
+<!--Data table -->
 <div class="p-grid p-formgrid">
   <div class="p-col-12 p-mb-5">
     <p-toolbar>

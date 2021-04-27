@@ -1,6 +1,6 @@
 export class Grading{
   id: number;
-  item;
-  percentage;
+  item: string;
+  percentage: number;
   syllabus;
 }

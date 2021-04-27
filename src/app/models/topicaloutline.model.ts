@@ -1,9 +1,8 @@
-import { Course } from './Matiere';
-import {Objectif} from './objectif.model';
+
 export class TopicalOutline{
-  id;
-  chapter;
-  lectureTopic;
-  weekNumber;
+  id: number;
+  chapter: string;
+  lectureTopic: string;
+  weekNumber: number;
   syllabus;
 }

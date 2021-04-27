@@ -1,0 +1,143 @@
+<p-confirmDialog [style]="{width: '450px'}"></p-confirmDialog>
+<!-- Toast -->
+<p-toast key="toast"></p-toast><!-- Toast -->
+<!-- Menu Context -->
+<p-contextMenu #cm [model]="items"></p-contextMenu>
+<!-- Toolbar -->
+<div class="p-grid p-formgrid">
+  <div class="p-col-12 p-mb-5">
+    <p-toolbar>
+      <div class="p-toolbar-group-left">
+        <p-button label="New" icon="pi pi-plus" class="p-button-success p-mr-2" (click)="newSyllabusDialog()">
+        </p-button>
+        <!-- <p-button label="Update" icon="pi pi-pencil" styleClass="p-button-success"></p-button> -->
+        <button pButton pRipple label="Delete" icon="pi pi-trash" class="p-button-danger"
+          (click)="deleteSelectedSyllabi()" [disabled]="!selectedSyllabi || !selectedSyllabi.length"></button>
+        <i class="p-toolbar-separator pi pi-bars p-mr-2" style="vertical-align: middle"></i>
+      </div>
+
+      <div class="p-toolbar-group-right">
+        <button type="button" pButton pRipple icon="pi pi-file-o" class="p-mr-2" pTooltip="CSV"
+          tooltipPosition="bottom"></button>
+        <button type="button" pButton pRipple icon="pi pi-file-excel" class="p-button-success p-mr-2" pTooltip="XLS"
+          tooltipPosition="bottom"></button>
+        <button type="button" pButton pRipple icon="pi pi-file-pdf" class="p-button-warning p-mr-2" pTooltip="PDF"
+          tooltipPosition="bottom"></button>
+        <!-- <button type="button" pButton pRipple icon="pi pi-file-o" (click)="dt.exportCSV()" class="p-mr-2" pTooltip="CSV" tooltipPosition="bottom"></button> -->
+      </div>
+    </p-toolbar>
+  </div>
+
+  <!-- Tab of syllabus list -->
+
+  <p-panel class="p-col-12">
+    <div class="card p-p-2">
+      <h5>Syllabus List</h5>
+      <p-table #dt1 [value]="syllabi" [(selection)]="selectedSyllabi" dataKey="id" [rows]="10"
+        [(contextMenuSelection)]="selectedSyllabus" [contextMenu]="cm" [showCurrentPageReport]="true"
+        [rowsPerPageOptions]="[10,25,50]" [loading]="loading" styleClass="p-datatable-gridlines" [paginator]="true"
+        currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" styleClass="p-datatable-responsive-demo"
+        [globalFilterFields]="['coordinatorFullName', 'courseName', 'instructors','archived', 'semesterNumber', 'academicYear']">
+        <ng-template pTemplate="caption">
+          <div class="p-d-flex">
+            <button pButton label="Clear" class="p-button-outlined" icon="pi pi-filter-slash"
+              (click)="clear(dt1)"></button>
+            <span class="p-input-icon-left p-ml-auto">
+              <i class="pi pi-search"></i>
+              <input pInputText type="text" (input)="dt1.filterGlobal($event.target.value, 'contains')"
+                placeholder="Search keyword" />
+            </span>
+          </div>
+        </ng-template>
+        <ng-template pTemplate="header">
+          <tr>
+            <th style="width: 3rem">
+              <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+            </th>
+            <th pSortableColumn="courseName">
+              <div class="p-d-flex p-jc-between p-ai-center">
+                Course
+                <p-sortIcon field="courseName"></p-sortIcon>
+                <p-columnFilter type="text" field="courseName" display="menu" class="p-ml-auto"></p-columnFilter>
+              </div>
+            </th>
+            <th pSortableColumn="coordinatorFullName">
+              <div class="p-d-flex p-jc-between p-ai-center">
+                Coordinator
+                <p-sortIcon field="coordinatorFullName"></p-sortIcon>
+                <p-columnFilter type="text" field="coordinatorFullName" display="menu" class="p-ml-auto"></p-columnFilter>
+              </div>
+            </th>
+            <th pSortableColumn="instructors">
+              <div class="p-d-flex p-jc-between p-ai-center">
+                Instructors
+                <p-sortIcon field="instructors"></p-sortIcon>
+                <p-columnFilter type="text" field="instructors" display="menu" class="p-ml-auto"></p-columnFilter>
+              </div>
+            </th>
+            <th pSortableColumn="semesterNumber">
+              <div class="p-d-flex p-jc-between p-ai-center">
+                Semester
+                <p-sortIcon field="semesterNumber"></p-sortIcon>
+                <p-columnFilter type="text" field="semesterNumber" display="menu" class="p-ml-auto"></p-columnFilter>
+              </div>
+            </th>
+            <th pSortableColumn="academicYear">
+              <div class="p-d-flex p-jc-between p-ai-center">
+                Academic Year
+                <p-sortIcon field="academicYear"></p-sortIcon>
+                <p-columnFilter type="text" field="academicYear" display="menu" class="p-ml-auto"></p-columnFilter>
+              </div>
+            </th>
+            <th pSortableColumn="archived">
+              <div class="p-d-flex p-jc-between p-ai-center">
+                Archived
+                <p-sortIcon field="archived"></p-sortIcon>
+                <p-columnFilter type="text" field="archived" display="menu" class="p-ml-auto"></p-columnFilter>
+              </div>
+            </th>
+
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-syllabus>
+          <tr [pContextMenuRow]="syllabus">
+            <td>
+              <p-tableCheckbox [value]="syllabus.id"></p-tableCheckbox>
+            </td>
+            <td>
+              {{syllabus.courseName}}
+            </td>
+            <td>
+              {{syllabus.coordinatorFullName}}
+            </td>
+            <td >
+              <li *ngFor="let item of syllabus.instructors">
+                {{item}}
+              </li>
+
+            </td>
+            <td>
+              {{syllabus.semesterNumber}}
+            </td>
+            <td>
+              {{syllabus.academicYear}}
+            </td>
+            <td>
+              {{syllabus.archived}}
+            </td>
+            <td>
+              <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success p-mr-2"
+                (click)="editSyllabus(syllabus)"></button>
+              <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-danger"
+                (click)="deleteSyllabus(syllabus)"></button>
+            </td>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="emptymessage">
+          <tr>
+            <td colspan="7">No syllabus found.</td>
+          </tr>
+        </ng-template>
+      </p-table>
+    </div>
+  </p-panel>
