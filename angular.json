@@ -43,9 +43,9 @@
             "scripts": [
               "node_modules/admin-lte/plugins/jquery/jquery.min.js",
               "node_modules/bootstrap/dist/js/bootstrap.js",
-              "../node_modules/chart.js/dist/Chart.js",
+              "node_modules/chart.js/dist/Chart.js",
               "node_modules/admin-lte/plugins/bootstrap/js/bootstrap.bundle.min.js",
-              "node_modules/admin-lte/dist/js/adminlte.min.js",
+              "node_modules/admin-lte/dist/js/adminlte.min.js"
             ]
           },
           "configurations": {

@@ -1,3 +1,4 @@
+import { Table } from 'primeng/table';
 import { AuthService } from './../../../services/auth.service';
 import { MessageService, MenuItem, ConfirmationService } from 'primeng/api';
 import { SignUpRequest } from './../../../models/signup.model';
@@ -154,6 +155,7 @@ export class NewUserComponent implements OnInit {
     }
   }
   public saveUser(): void {
+    this.newUser.roles = [];
     this.submitted = true;
     if (this.adminRole) {
       this.newUser.roles.push('admin');
@@ -197,7 +199,7 @@ export class NewUserComponent implements OnInit {
   }
 
   public getUsers(): void {
-    this.catService.getList('users').subscribe(
+    this.catService.getList('users?size=500').subscribe(
       (data: any) => {
         this.users = data._embedded.users;
         this.loading = false;
@@ -208,8 +210,6 @@ export class NewUserComponent implements OnInit {
       }
     );
   }
-
-  public clear(): void {}
 
   showModalDialog(): void {
     this.header = 'New User';
@@ -258,4 +258,8 @@ export class NewUserComponent implements OnInit {
       );
     });
   } */
+
+  clear(table: Table) {
+    table.clear();
+  }
 }

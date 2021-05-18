@@ -1,3 +1,4 @@
+import { MappingComponent } from './pages/syllabi/mapping/mapping.component';
 import { NewSyllabusComponent } from './pages/syllabi/new-syllabus/new-syllabus.component';
 import { UserProfileComponent } from './pages/users/user-profile/user-profile.component';
 import { PortfolioListComponent } from './pages/portfolios/portfolio-list/portfolio-list.component';
@@ -60,6 +61,8 @@ import { StepsModule } from 'primeng/steps';
 import { FieldsetModule } from 'primeng/fieldset';
 import { ChipsModule } from 'primeng/chips';
 import { AutoCompleteModule } from 'primeng/autocomplete';
+import {FileUploadModule} from 'primeng/fileupload';
+import { FileSaverModule } from 'ngx-filesaver';
 
 @NgModule({
   declarations: [
@@ -80,6 +83,7 @@ import { AutoCompleteModule } from 'primeng/autocomplete';
     PortfolioListComponent,
     UserProfileComponent,
     NewSyllabusComponent,
+    MappingComponent,
   ],
   imports: [
     BrowserModule,
@@ -121,6 +125,8 @@ import { AutoCompleteModule } from 'primeng/autocomplete';
     FieldsetModule,
     ChipsModule,
     AutoCompleteModule,
+    FileUploadModule,
+    FileSaverModule,
   ],
   providers: [loaderInterceptorProviders, authInterceptorProviders],
   bootstrap: [AppComponent],

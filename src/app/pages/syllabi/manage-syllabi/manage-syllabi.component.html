@@ -1,9 +1,30 @@
+<!-- Content Header (Page header) -->
+<section class="content-header">
+  <div class="container-fluid">
+    <div class="row mb-2">
+      <div class="col-sm-6">
+        <h1>Syllabi</h1>
+      </div>
+      <div class="col-sm-6">
+        <ol class="breadcrumb float-sm-right">
+          <li class="breadcrumb-item"><a href="#">Home</a></li>
+          <li class="breadcrumb-item active">Manage Syllabi</li>
+        </ol>
+      </div>
+    </div>
+  </div><!-- /.container-fluid -->
+</section>
 <p-confirmDialog [style]="{width: '450px'}"></p-confirmDialog>
 <!-- Toast -->
 <p-toast key="toast"></p-toast><!-- Toast -->
 <!-- Menu Context -->
 <p-contextMenu #cm [model]="items"></p-contextMenu>
 <!-- Toolbar -->
+<p-dialog header="New Syllabus" [(visible)]="displayDialog" [modal]="true" [style]="{width: '50vw'}"
+  [maximizable]="true" [baseZIndex]="10000" [draggable]="false" [resizable]="false">
+  <app-new-syllabus></app-new-syllabus>
+</p-dialog>
+
 <div class="p-grid p-formgrid">
   <div class="p-col-12 p-mb-5">
     <p-toolbar>
@@ -36,8 +57,9 @@
       <p-table #dt1 [value]="syllabi" [(selection)]="selectedSyllabi" dataKey="id" [rows]="10"
         [(contextMenuSelection)]="selectedSyllabus" [contextMenu]="cm" [showCurrentPageReport]="true"
         [rowsPerPageOptions]="[10,25,50]" [loading]="loading" styleClass="p-datatable-gridlines" [paginator]="true"
-        currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" styleClass="p-datatable-responsive-demo"
-        [globalFilterFields]="['coordinatorFullName', 'courseName', 'instructors','archived', 'semesterNumber', 'academicYear']">
+        currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+        styleClass="p-datatable-responsive-demo"
+        [globalFilterFields]="['coordinatorFullName', 'courseName', 'instructorName','archived', 'semesterNumber', 'academicYear']">
         <ng-template pTemplate="caption">
           <div class="p-d-flex">
             <button pButton label="Clear" class="p-button-outlined" icon="pi pi-filter-slash"
@@ -65,14 +87,15 @@
               <div class="p-d-flex p-jc-between p-ai-center">
                 Coordinator
                 <p-sortIcon field="coordinatorFullName"></p-sortIcon>
-                <p-columnFilter type="text" field="coordinatorFullName" display="menu" class="p-ml-auto"></p-columnFilter>
+                <p-columnFilter type="text" field="coordinatorFullName" display="menu" class="p-ml-auto">
+                </p-columnFilter>
               </div>
             </th>
-            <th pSortableColumn="instructors">
+            <th pSortableColumn="instructorName">
               <div class="p-d-flex p-jc-between p-ai-center">
-                Instructors
-                <p-sortIcon field="instructors"></p-sortIcon>
-                <p-columnFilter type="text" field="instructors" display="menu" class="p-ml-auto"></p-columnFilter>
+                Instructor
+                <p-sortIcon field="instructorName"></p-sortIcon>
+                <p-columnFilter type="text" field="instructorName" display="menu" class="p-ml-auto"></p-columnFilter>
               </div>
             </th>
             <th pSortableColumn="semesterNumber">
@@ -110,11 +133,8 @@
             <td>
               {{syllabus.coordinatorFullName}}
             </td>
-            <td >
-              <li *ngFor="let item of syllabus.instructors">
-                {{item}}
-              </li>
-
+            <td>
+              {{syllabus.instructorName}}
             </td>
             <td>
               {{syllabus.semesterNumber}}
@@ -130,6 +150,8 @@
                 (click)="editSyllabus(syllabus)"></button>
               <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-danger"
                 (click)="deleteSyllabus(syllabus)"></button>
+              <button pButton pRipple type="button" class="p-button-rounded p-button-success p-mr-2" icon="pi pi-arrow-down"
+                 (click)="onDownloadFile(syllabus.syllabusFileName)"></button>
             </td>
           </tr>
         </ng-template>

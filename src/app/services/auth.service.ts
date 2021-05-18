@@ -34,8 +34,12 @@ export class AuthService {
 
         if (this.isUserAdmin()) {
           this.redirectUrl = '/admin';
+        } else if(this.isUserCoordinator() || this.isUserInstructor()) {
+          this.redirectUrl = '/prof';
         } else {
-          this.redirectUrl = '/home';
+          console.log('not connected');
+
+          this.redirectUrl = '';
         }
 
         this.router.navigate([this.redirectUrl]).then(() => {

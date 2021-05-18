@@ -4,6 +4,7 @@ import { MessageService, ConfirmationService, MenuItem } from 'primeng/api';
 import { CatalogueService } from './../../../services/catalogue.service';
 import { Component, OnInit } from '@angular/core';
 import { Course } from 'src/app/models/course.model';
+import { Table } from 'primeng/table';
 
 interface FO {
   name: string;
@@ -17,7 +18,6 @@ class User {
     this.email = email;
   }
 }
-
 
 @Component({
   selector: 'app-new-course',
@@ -54,7 +54,6 @@ export class NewCourseComponent implements OnInit {
       { name: 'Information System Security' },
       { name: 'Big Data' },
     ];
-
   }
 
   ngOnInit(): void {
@@ -81,10 +80,11 @@ export class NewCourseComponent implements OnInit {
    * getCourses
    */
   public getCourses(): void {
-    this.catService.getList('courses').subscribe(
+    this.catService.getList('courses?size=500').subscribe(
       (data: any) => {
         this.courses = data._embedded.courses;
         this.loading = false;
+        console.log(data);
       },
       (error) => {
         console.error(error);
@@ -94,7 +94,7 @@ export class NewCourseComponent implements OnInit {
 
   // get user list
   public getUsers(): void {
-    this.catService.getList('users').subscribe(
+    this.catService.getList('users/forList').subscribe(
       (data: any) => {
         // console.log(data);
         this.users = data._embedded.users;
@@ -235,5 +235,18 @@ export class NewCourseComponent implements OnInit {
     } else {
       this.displayFOptions = false;
     }
+  }
+
+  public paginate(event): void {
+    //event.first = Index of the first record
+    //event.rows = Number of rows to display in new page
+    //event.page = Index of the new page
+    //event.pageCount = Total number of pages
+
+    console.log(event);
+  }
+
+  clear(table: Table) {
+    table.clear();
   }
 }

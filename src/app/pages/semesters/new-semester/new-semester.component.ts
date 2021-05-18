@@ -1,3 +1,4 @@
+import { Table } from 'primeng/table';
 import { CatalogueService } from './../../../services/catalogue.service';
 import { AuthService } from './../../../services/auth.service';
 import { Semester } from './../../../models/semester.model';
@@ -125,5 +126,9 @@ export class NewSemesterComponent implements OnInit {
    */
   public newSemesterDialog(): void {
     this.displayDialog = true;
+  }
+
+  clear(table: Table) {
+    table.clear();
   }
 }

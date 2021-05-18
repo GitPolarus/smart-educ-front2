@@ -1,0 +1,88 @@
+<!-- Content Header (Page header) -->
+<section class="content-header">
+  <div class="container-fluid">
+    <div class="row mb-2">
+      <div class="col-sm-6">
+        <h1>Syllabi</h1>
+      </div>
+      <div class="col-sm-6">
+        <ol class="breadcrumb float-sm-right">
+          <li class="breadcrumb-item"><a href="#">Home</a></li>
+          <li class="breadcrumb-item active">Syllabi Mapping</li>
+        </ol>
+      </div>
+    </div>
+  </div><!-- /.container-fluid -->
+</section>
+<p-confirmDialog [style]="{width: '450px'}"></p-confirmDialog>
+<!-- Toast -->
+<p-toast key="toast"></p-toast><!-- Toast -->
+<!-- Toolbar -->
+
+<!-- Tab of syllabus list -->
+
+<p-panel class="p-col-12">
+  <div class="card p-p-2">
+    <h5>Curriculum Alignment with Student Outcomes</h5>
+    <p-table #dt1 [value]="mappingData" dataKey="id" [rows]="10" [showCurrentPageReport]="true"  styleClass="p-datatable-gridlines" [loading]="loading"
+      [globalFilterFields]="['courseName','semesterNumber', 'academicYear']">
+      <ng-template pTemplate="caption">
+        <div class="p-d-flex">
+              <p-dropdown [options]="semesters" [virtualScroll]="true" (onChange)="onDropdownItemChange($event)" name="academicYear" id="academicYear"
+                [(ngModel)]="selectedsemester" placeholder="Select a Year" optionLabel="semesterLabel" [showClear]="true"
+                #academicYear="ngModel"></p-dropdown>
+          <span class="p-input-icon-left p-ml-auto">
+            <i class="pi pi-search"></i>
+            <input pInputText type="text" (input)="dt1.filterGlobal($event.target.value, 'contains')"
+              placeholder="Search keyword" />
+          </span>
+        </div>
+      </ng-template>
+      <ng-template pTemplate="header">
+        <tr>
+          <th>SO1</th>
+          <th>SO2</th>
+          <th>SO3</th>
+          <th>SO4</th>
+          <th>SO5</th>
+          <th>SO6</th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-mapping let-rowIndex="rowIndex">
+        <tr *ngIf="rowGroupMetadata[mapping.courseName].index === rowIndex"
+          [attr.rowspan]="rowGroupMetadata[mapping.courseName].size">
+          <td colspan="6">
+            <span class="p-text-bold p-ml-2">{{mapping.courseName}}</span>
+          </td>
+
+        </tr>
+        <tr>
+          <td>
+            {{mapping.so1}}
+          </td>
+          <td>
+            {{mapping.so2}}
+          </td>
+          <td>
+            {{mapping.so3}}
+          </td>
+          <td>
+            {{mapping.so4}}
+          </td>
+          <td>
+            {{mapping.so5}}
+          </td>
+          <td>
+            {{mapping.so6}}
+          </td>
+        </tr>
+
+      </ng-template>
+      <ng-template pTemplate="emptymessage">
+        <tr>
+          <td colspan="7">No syllabus found.</td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </div>
+</p-panel>

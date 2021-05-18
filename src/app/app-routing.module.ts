@@ -1,3 +1,7 @@
+import { MappingComponent } from './pages/syllabi/mapping/mapping.component';
+import { ProfGuard } from './guards/prof.guard';
+import { ProfessorComponent } from './views/professor/professor.component';
+import { AdminGuard } from './guards/admin.guard';
 import { NewSyllabusComponent } from './pages/syllabi/new-syllabus/new-syllabus.component';
 import { UserProfileComponent } from './pages/users/user-profile/user-profile.component';
 import { PortfolioListComponent } from './pages/portfolios/portfolio-list/portfolio-list.component';
@@ -33,6 +37,7 @@ const routes: Routes = [
   },
 
   { path: 'admin', component: AdminComponent ,
+  canActivate: [AdminGuard],
     children:[
       {
         path: 'users', component: NewUserComponent ,
@@ -47,6 +52,9 @@ const routes: Routes = [
         path: 'syllabi', component: ListSyllabusComponent ,
       } ,
       {
+        path: 'mapping', component: MappingComponent ,
+      } ,
+      {
         path: 'manage_syllabi', component: ManageSyllabiComponent ,
       } ,
       {
@@ -59,6 +67,14 @@ const routes: Routes = [
         path: 'user_profile', component: UserProfileComponent ,
       }
     ]
+  },{
+    path: 'prof', component: ProfessorComponent ,
+    canActivate: [ProfGuard],
+      children:[
+        {
+          path: 'syllabi', component: ListSyllabusComponent ,
+        } ,
+      ]
   },
 
 

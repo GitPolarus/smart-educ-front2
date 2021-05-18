@@ -1,6 +1,7 @@
 export class Semester {
   semesterNumber: number;
   academicYear: number;
+  semesterLabel: string;
   portfolio;
   faculty;
   opened: boolean;

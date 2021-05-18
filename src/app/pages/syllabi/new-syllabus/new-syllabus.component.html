@@ -1,107 +1,420 @@
+<!-- Content Header (Page header) -->
+<section class="content-header">
+  <div class="container-fluid">
+    <div class="row mb-2">
+      <div class="col-sm-6">
+        <h1>Syllabus</h1>
+      </div>
+      <div class="col-sm-6">
+        <ol class="breadcrumb float-sm-right">
+          <li class="breadcrumb-item"><a href="#">Home</a></li>
+          <li class="breadcrumb-item active">Add Syllabus</li>
+        </ol>
+      </div>
+    </div>
+  </div><!-- /.container-fluid -->
+</section>
+
 <p-panel header="New Syllabus" [toggleable]="true">
+  <p-toast key="message"></p-toast><!-- Toast -->
+  <ng-template pTemplate="content">
 
-  <p-fieldset [toggleable]="true" styleClass="p-mb-5">
-    <ng-template pTemplate="header">General Information</ng-template>
-    <h5>Syllabus Course</h5>
-    <div class="p-fluid p-mb-1">
-      <p-dropdown [options]="courses" [(ngModel)]="selectedCourse" placeholder="Select a Course"
-        optionLabel="courseName" [showClear]="true"></p-dropdown>
-    </div>
-    <h5 class="p-mt-1">Instructors</h5>
-    <span class="p-fluid">
-      <p-chips [(ngModel)]="newSyllabus.instructors" separator=","></p-chips>
-    </span>
-    <h5 class="p-mt-1">Prerequisite Courses</h5>
-    <span class="p-fluid">
-      <p-autoComplete [(ngModel)]="preRequisiteselectedCourses" [suggestions]="filteredCourses"
-        (completeMethod)="filterCourse($event)" field="courseName" [multiple]="true">
-      </p-autoComplete>
-    </span>
+    <p-fieldset [toggleable]="true" styleClass="p-mb-5">
+      <ng-template pTemplate="header">General Information</ng-template>
 
-    <h5 class="p-mt-1">Co-requisite Courses</h5>
-    <span class="p-fluid">
-      <p-autoComplete [(ngModel)]="coRequisiteselectedCourses" [suggestions]="filteredCourses"
-        (completeMethod)="filterCourse($event)" field="courseName" [multiple]="true">
-      </p-autoComplete>
-    </span>
 
-    <h5 class="p-mt-1">Hours</h5>
-    <div class="p-grid p-fluid">
-      <div class="p-field p-col-12 p-md-3">
-        <label for="creditHours">Credit Hours</label>
-        <p-inputNumber [(ngModel)]="newSyllabus.creditHours" [showButtons]="true" buttonLayout="horizontal"
-          inputId="creditHours" spinnerMode="horizontal" [step]="0.5" [min]=0 decrementButtonClass="p-button-danger"
-          incrementButtonClass="p-button-success" incrementButtonIcon="pi pi-plus" decrementButtonIcon="pi pi-minus">
-        </p-inputNumber>
+      <div class="p-fluid p-formgrid p-grid">
+        <div class="p-field p-col-6 p-mb-10">
+          <label for="academicYear">Academic Year</label>
+          <p-dropdown [options]="semesters" [virtualScroll]="true" name="academicYear" id="academicYear"
+            [(ngModel)]="selectedsemester" placeholder="Select a Year" optionLabel="semesterLabel" [showClear]="true"
+            #academicYear="ngModel"></p-dropdown>
+        </div>
+
+        <div class="p-field p-col-6 p-mb-10">
+          <label for="syllabusCourse">Syllabus Course</label>
+          <div class="p-fluid p-mb-1">
+            <p-dropdown [options]="courses" [(ngModel)]="selectedCourse" placeholder="Select a Course"
+              optionLabel="courseName" [showClear]="true" id="syllabusCourse"></p-dropdown>
+          </div>
+        </div>
+
+
+        <div class="p-field p-col-12 p-mb-10">
+          <label for="syllabusFile">Syllabus File</label>
+
+          <p-fileUpload name="file" url="http://localhost:8080/filestorage/upload" (onUpload)="onUpload($event)"
+            id="syllabusFile" (onProgress)="onProgress($event)" accept=".pdf" maxFileSize="1000000000">
+            <ng-template pTemplate="content">
+              <ul *ngIf="fileUploaded">
+                {{file.name}} uploaded
+                <!-- <li *ngFor="let file of uploadedFiles"></li> -->
+              </ul>
+            </ng-template>
+          </p-fileUpload>
+        </div>
+
       </div>
-      <div class="p-field p-col-12 p-md-3">
-        <label for="lectureHours">Lecture Hours</label>
-        <p-inputNumber [(ngModel)]="newSyllabus.lectureHours" [showButtons]="true" buttonLayout="horizontal"
-          inputId="lectureHours" spinnerMode="horizontal" [step]="6" [min]=0 decrementButtonClass="p-button-danger"
-          incrementButtonClass="p-button-success" incrementButtonIcon="pi pi-plus" decrementButtonIcon="pi pi-minus">
-        </p-inputNumber>
-      </div>
-      <div class="p-field p-col-12 p-md-3">
-        <label for="horizontal">Tutorial Hours</label>
-        <p-inputNumber [(ngModel)]="newSyllabus.tutorialHours" [showButtons]="true" buttonLayout="horizontal"
-          inputId="horizontal" spinnerMode="horizontal" [step]="6" [min]=0 decrementButtonClass="p-button-danger"
-          incrementButtonClass="p-button-success" incrementButtonIcon="pi pi-plus" decrementButtonIcon="pi pi-minus">
-        </p-inputNumber>
-      </div>
-      <div class="p-field p-col-12 p-md-3">
-        <label for="labHours">Lab Hours</label>
-        <p-inputNumber [(ngModel)]="newSyllabus.labHours" [showButtons]="true" buttonLayout="horizontal"
-          inputId="labHours" spinnerMode="horizontal" [step]="6" [min]=0 decrementButtonClass="p-button-danger"
-          incrementButtonClass="p-button-success" incrementButtonIcon="pi pi-plus" decrementButtonIcon="pi pi-minus">
-        </p-inputNumber>
-      </div>
-    </div>
-    <h5>Catalogue Description</h5>
-    <span class="p-fluid">
-      <textarea pInputTextarea rows="5" [cols]="30" [(ngModel)]="newSyllabus.catalogueDescription"
-        autoResize="autoResize"></textarea>
-    </span>
 
-    <h5 class="p-mt-1">Text Books</h5>
-    <ol [formGroup]="tbForm">
 
+      <!-- Syllabus Course Instructor  -->
+
+      <h5 class="p-mt-1">Instructor</h5>
+      <span class="p-fluid">
+        <p-autoComplete [(ngModel)]="selectedInstructor" [suggestions]="filteredUsers"
+          (completeMethod)="filterUser($event)" field="fullName" [multiple]="false" [dropdown]="true"></p-autoComplete>
+      </span>
+
+      <!-- Prerequisite Courses -->
+      <h5 class="p-mt-1">Prerequisite Courses</h5>
+      <span class="p-fluid">
+        <p-autoComplete [(ngModel)]="selectedPreRequisiteCourses" [suggestions]="filteredCourses"
+          (completeMethod)="filterCourse($event)" field="courseName" [multiple]="true" [dropdown]="true">
+        </p-autoComplete>
+      </span>
+      <!-- Co-requisite Courses -->
+      <h5 class="p-mt-1">Co-requisite Courses</h5>
+      <span class="p-fluid">
+        <p-autoComplete [(ngModel)]="selectedCoRequisiteCourses" [suggestions]="filteredCourses"
+          (completeMethod)="filterCourse($event)" field="courseName" [multiple]="true" [dropdown]="true">
+        </p-autoComplete>
+      </span>
+      <!-- Hours -->
+      <h5 class="p-mt-1">Hours</h5>
+      <div class="p-grid p-fluid">
+        <div class="p-field p-col-12 p-md-3">
+          <label for="creditHours">Credit Hours</label>
+          <p-inputNumber [(ngModel)]="newSyllabus.creditHours" [showButtons]="true" buttonLayout="horizontal"
+            inputId="creditHours" spinnerMode="horizontal" [step]="0.5" [min]=0 decrementButtonClass="p-button-danger"
+            incrementButtonClass="p-button-success" incrementButtonIcon="pi pi-plus" decrementButtonIcon="pi pi-minus">
+          </p-inputNumber>
+        </div>
+        <div class="p-field p-col-12 p-md-3">
+          <label for="lectureHours">Lecture Hours</label>
+          <p-inputNumber [(ngModel)]="newSyllabus.lectureHours" [showButtons]="true" buttonLayout="horizontal"
+            inputId="lectureHours" spinnerMode="horizontal" [step]="6" [min]=0 decrementButtonClass="p-button-danger"
+            incrementButtonClass="p-button-success" incrementButtonIcon="pi pi-plus" decrementButtonIcon="pi pi-minus">
+          </p-inputNumber>
+        </div>
+        <div class="p-field p-col-12 p-md-3">
+          <label for="horizontal">Tutorial Hours</label>
+          <p-inputNumber [(ngModel)]="newSyllabus.tutorialHours" [showButtons]="true" buttonLayout="horizontal"
+            inputId="horizontal" spinnerMode="horizontal" [step]="6" [min]=0 decrementButtonClass="p-button-danger"
+            incrementButtonClass="p-button-success" incrementButtonIcon="pi pi-plus" decrementButtonIcon="pi pi-minus">
+          </p-inputNumber>
+        </div>
+        <div class="p-field p-col-12 p-md-3">
+          <label for="labHours">Lab Hours</label>
+          <p-inputNumber [(ngModel)]="newSyllabus.labHours" [showButtons]="true" buttonLayout="horizontal"
+            inputId="labHours" spinnerMode="horizontal" [step]="6" [min]=0 decrementButtonClass="p-button-danger"
+            incrementButtonClass="p-button-success" incrementButtonIcon="pi pi-plus" decrementButtonIcon="pi pi-minus">
+          </p-inputNumber>
+        </div>
+      </div>
+      <!-- Catalogue Description -->
+      <h5>Catalogue Description</h5>
+      <div class="p-field p-fluid">
+        <textarea id="description" pInputTextarea [(ngModel)]="newSyllabus.catalogueDescription" rows="3"
+          cols="20"></textarea>
+      </div>
+      <!-- Text Book -->
+      <h5 class="p-mt-1">Text Books</h5>
+      <ol [formGroup]="tbForm">
+
+        <button pButton pRipple type="button" icon="pi pi-plus" class="p-button-success p-m-1"
+          (click)="onAddFormControl()"></button>
+        <button pButton pRipple type="button" icon="pi pi-times" class="p-button-danger p-m-1"
+          (click)="onRemoveFormControl()"></button>
+
+        <li *ngFor="let item of tbForm.get('tb')?.controls">
+          <span class="p-fluid">
+            <input type="text" pInputText [formControl]="item.get('reference')" class="p-m-1">
+          </span>
+        </li>
+      </ol>
+    </p-fieldset>
+
+    <!-- Topical Outline and Grading -->
+
+    <p-fieldset legend="Topical Outline and Grading" [toggleable]="true">
+      <!-- Topical outline -->
+      <h5>Topical Outline</h5>
       <button pButton pRipple type="button" icon="pi pi-plus" class="p-button-success p-m-1"
-        (click)="onAddFormControl()"></button>
+        (click)="onAddTopicalOutline()"></button>
       <button pButton pRipple type="button" icon="pi pi-times" class="p-button-danger p-m-1"
-        (click)="onRemoveFormControl()"></button>
+        (click)="onRemoveTopicalOutline()"></button>
+      <div class="card">
 
-      <li *ngFor="let item of tbForm.get('tb')?.controls">
-        <span class="p-fluid">
-          <input type="text" pInputText [formControl]="item.get('textBook')" class="p-m-1">
-        </span>
-      </li>
-    </ol>
+        <p-table [value]="tos" dataKey="id" styleClass="p-datatable-gridlines" autoLayout="true">
+          <ng-template pTemplate="header">
+            <tr>
+              <th>Weeks</th>
+              <th>Chapter</th>
+              <th>Lecture Topics</th>
+            </tr>
+          </ng-template>
+          <ng-template pTemplate="body" let-to let-index index>
+            <tr>
 
-  </p-fieldset>
+              <td>
+                <p-cellEditor>
+                  <ng-template pTemplate="input">
+                    <input pInputText type="text" [(ngModel)]="to.weekNumber">
+                  </ng-template>
+                  <ng-template pTemplate="output">
+                    {{to.weekNumber}}
+                  </ng-template>
+                </p-cellEditor>
+              </td>
+
+              <td pEditableColumn>
+                <p-cellEditor>
+                  <ng-template pTemplate="input">
+                    <textarea pInputTextarea [(ngModel)]="to.chapter"></textarea>
+                  </ng-template>
+                  <ng-template pTemplate="output">
+                    {{to.chapter}}
+                  </ng-template>
+                </p-cellEditor>
+              </td>
+
+              <td pEditableColumn>
+                <p-cellEditor>
+                  <ng-template pTemplate="input">
+                    <span class="p-fluid">
+                      <textarea pInputTextarea [(ngModel)]="to.lectureTopic"></textarea>
+                    </span>
+                  </ng-template>
+                  <ng-template pTemplate="output">
+                    {{to.lectureTopic}}
+                  </ng-template>
+                </p-cellEditor>
+              </td>
+
+            </tr>
+          </ng-template>
+        </p-table>
+      </div>
+
+      <!-- Grading -->
+      <h5>Grading</h5>
+      <button pButton pRipple type="button" icon="pi pi-plus" class="p-button-success p-m-1"
+        (click)="onAddGrading()"></button>
+      <button pButton pRipple type="button" icon="pi pi-times" class="p-button-danger p-m-1"
+        (click)="onRemoveGrading()"></button>
+      <div class="card">
+
+        <p-table [value]="gradings" dataKey="id" styleClass="p-datatable-gridlines">
+          <ng-template pTemplate="header">
+            <tr>
+              <th>Item</th>
+              <th>Percentage</th>
+            </tr>
+          </ng-template>
+          <ng-template pTemplate="body" let-grading>
+            <tr>
+
+              <td pEditableColumn>
+                <p-cellEditor>
+                  <ng-template pTemplate="input">
+                    <span class="p-fluid">
+                      <input pInputText type="text" [(ngModel)]="grading.item">
+                    </span>
+                  </ng-template>
+                  <ng-template pTemplate="output">
+                    {{grading.item}}
+                  </ng-template>
+                </p-cellEditor>
+              </td>
+
+              <td pEditableColumn>
+                <p-cellEditor>
+                  <ng-template pTemplate="input">
+                    <p-inputNumber [(ngModel)]="grading.percentage" [min]="0" [max]="100" [step]="5"
+                      [showButtons]="true">
+                    </p-inputNumber>
+                  </ng-template>
+                  <ng-template pTemplate="output">
+                    {{grading.percentage}}
+                  </ng-template>
+                </p-cellEditor>
+              </td>
 
 
-  <p-fieldset legend="Topical Outline and Grading" [toggleable]="true">
-    <h5 class="p-mt-1">Topical Outline</h5>
-    <table>
-      <thead>
-        <tr>
-          <th>Weeks</th>
-          <th>Chapter</th>
-          <th>Lecture Topics</th>
-        </tr>
-      </thead>
-      <tbody [formGroup]="tbForm">
-        <tr *ngFor="let to of  toForm.get('to')?.controls">
-          <td> <input type="text" pInputText [formControl]="to.get('week')" class="p-m-1"> </td>
-          <td>  <input type="text" pInputText [formControl]="to.get('chapter')" class="p-m-1"> </td>
-          <td> <input type="text" pInputText [formControl]="to.get('lectureTopic')" class="p-m-1"> </td>
-        </tr>
-      </tbody>
-    </table>
-  </p-fieldset>
 
 
+            </tr>
+          </ng-template>
+        </p-table>
+      </div>
+    </p-fieldset>
 
 
+    <!-- Course Outcomes -->
 
+    <p-fieldset legend="Course Outcomes" [toggleable]="true">
+      <!-- Topical outline -->
+      <h5>Course Outcomes</h5>
+      <button pButton pRipple type="button" icon="pi pi-plus" class="p-button-success p-m-1"
+        (click)="onAddCourseOutcomes()"></button>
+      <button pButton pRipple type="button" icon="pi pi-times" class="p-button-danger p-m-1"
+        (click)="onRemoveCourseOutcomes()"></button>
+      <div class="card">
+
+        <p-table [value]="courseOutcomes" dataKey="id" styleClass="p-datatable-gridlines">
+          <ng-template pTemplate="header">
+            <tr>
+              <th style="width: 5%"></th>
+              <th>Description</th>
+            </tr>
+          </ng-template>
+          <ng-template pTemplate="body" let-co>
+            <tr>
+              <td>
+                <p-cellEditor>
+
+                  <ng-template pTemplate="output">
+                    {{co.index}}
+                  </ng-template>
+                </p-cellEditor>
+              </td>
+              <td pEditableColumn>
+                <p-cellEditor>
+                  <ng-template pTemplate="input">
+                    <span class="p-fluid">
+                      <input pInputText type="text" [(ngModel)]="co.co">
+                    </span>
+                  </ng-template>
+                  <ng-template pTemplate="output">
+                    {{co.co}}
+                  </ng-template>
+                </p-cellEditor>
+              </td>
+            </tr>
+          </ng-template>
+        </p-table>
+      </div>
+
+      <!-- Grading -->
+      <h5>Maping Course Outcomes Student Outcomes</h5>
+
+      <div class="card">
+
+        <p-table [value]="courseOutcomes" dataKey="id" styleClass="p-datatable-gridlines">
+          <ng-template pTemplate="header">
+            <tr>
+              <th>Course Outcomes</th>
+              <th>SO1</th>
+              <th>SO2</th>
+              <th>SO3</th>
+              <th>SO4</th>
+              <th>SO5</th>
+              <th>SO6</th>
+              <th>SO7</th>
+            </tr>
+          </ng-template>
+          <ng-template pTemplate="body" let-co>
+            <tr>
+
+              <td pEditableColumn>
+                <p-cellEditor>
+                  <ng-template pTemplate="output">
+                    {{co.index}}
+                  </ng-template>
+                </p-cellEditor>
+              </td>
+
+              <td pEditableColumn>
+                <p-cellEditor>
+                  <ng-template pTemplate="input">
+                    <p-dropdown [options]="poids" [(ngModel)]="co.so1" [style]="{'width':'100%'}"></p-dropdown>
+                  </ng-template>
+                  <ng-template pTemplate="output">
+                    {{co.so1}}
+                  </ng-template>
+                </p-cellEditor>
+              </td>
+              <td pEditableColumn>
+                <p-cellEditor>
+                  <ng-template pTemplate="input">
+                    <p-dropdown [options]="poids" [(ngModel)]="co.so2" [style]="{'width':'100%'}"></p-dropdown>
+                  </ng-template>
+                  <ng-template pTemplate="output">
+                    {{co.so2}}
+                  </ng-template>
+                </p-cellEditor>
+              </td>
+              <td pEditableColumn>
+                <p-cellEditor>
+                  <ng-template pTemplate="input">
+                    <p-dropdown [options]="poids" [(ngModel)]="co.so3" [style]="{'width':'100%'}"></p-dropdown>
+                  </ng-template>
+                  <ng-template pTemplate="output">
+                    {{co.so3}}
+                  </ng-template>
+                </p-cellEditor>
+              </td>
+              <td pEditableColumn>
+                <p-cellEditor>
+                  <ng-template pTemplate="input">
+                    <p-dropdown [options]="poids" [(ngModel)]="co.so4" [style]="{'width':'100%'}"></p-dropdown>
+                  </ng-template>
+                  <ng-template pTemplate="output">
+                    {{co.so4}}
+                  </ng-template>
+                </p-cellEditor>
+              </td>
+              <td pEditableColumn>
+                <p-cellEditor>
+                  <ng-template pTemplate="input">
+                    <p-dropdown [options]="poids" [(ngModel)]="co.so5" [style]="{'width':'100%'}"></p-dropdown>
+                  </ng-template>
+                  <ng-template pTemplate="output">
+                    {{co.so5}}
+                  </ng-template>
+                </p-cellEditor>
+              </td>
+              <td pEditableColumn>
+                <p-cellEditor>
+                  <ng-template pTemplate="input">
+                    <p-dropdown [options]="poids" [(ngModel)]="co.so6" [style]="{'width':'100%'}"></p-dropdown>
+                  </ng-template>
+                  <ng-template pTemplate="output">
+                    {{co.so6}}
+                  </ng-template>
+                </p-cellEditor>
+              </td>
+
+              <td pEditableColumn>
+                <p-cellEditor>
+                  <ng-template pTemplate="input">
+                    <p-dropdown [options]="poids" [(ngModel)]="co.so7" [style]="{'width':'100%'}"></p-dropdown>
+                  </ng-template>
+                  <ng-template pTemplate="output">
+                    {{co.so7}}
+                  </ng-template>
+                </p-cellEditor>
+              </td>
+
+            </tr>
+          </ng-template>
+
+        </p-table>
+      </div>
+      <div class="p-text-italic">E= Emphasize (Strong) R= Reinforce (Intermediate) I= Introduce (Weak)</div>
+    </p-fieldset>
+
+
+  </ng-template>
+  <ng-template pTemplate="footer" style="align-content: center">
+
+    <div class="p-text-right">
+
+      <button  pButton type="button" label="Download File" class="p-button-success" icon="pi pi-arrow-down" iconPos="left"
+        (click)="onDownloadFile()"></button>
+
+      <button  pButton type="button" label="Save" class="p-button-success" icon="pi pi-save" iconPos="left"
+        (click)="onSave()"></button>
+    </div>
+  </ng-template>
 </p-panel>
