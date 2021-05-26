@@ -24,7 +24,7 @@ export class NewUserComponent implements OnInit {
   adminRole = false;
   coordinatorRole = false;
   instructorRole = false;
-  sendEmail = false;
+  sendEmail: boolean = false;
   submitted = false;
   display = false;
   items: MenuItem[];
@@ -166,9 +166,8 @@ export class NewUserComponent implements OnInit {
     if (this.instructorRole) {
       this.newUser.roles.push('inst');
     }
-    if (this.sendEmail) {
-      this.newUser.sendEmail = true;
-    }
+
+    this.newUser.sendEmail = this.sendEmail;
 
     this.newUser.createdBy = this.authService.getUser().email;
     console.log(this.newUser);
