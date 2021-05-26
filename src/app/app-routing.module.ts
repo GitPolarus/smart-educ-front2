@@ -1,3 +1,6 @@
+import { SyllabusDetailsComponent } from './pages/syllabi/Syllabus-details/Syllabus-details.component';
+import { PoesComponent } from './pages/poes/poes.component';
+import { MissionsComponent } from './pages/missions/missions.component';
 import { MappingComponent } from './pages/syllabi/mapping/mapping.component';
 import { ProfGuard } from './guards/prof.guard';
 import { ProfessorComponent } from './views/professor/professor.component';
@@ -20,63 +23,95 @@ import { LoginComponent } from './pages/login/login.component';
 import { NgModule } from '@angular/core';
 
 const routes: Routes = [
-  { path: '', component: VisitorComponent ,
+  {
+    path: '',
+    component: VisitorComponent,
     children: [
       {
-        path: '', component: HomeComponent ,
-      }, {
-        path: 'home', component: HomeComponent ,
+        path: '',
+        component: HomeComponent,
       },
       {
-        path: 'login', component: LoginComponent ,
+        path: 'home',
+        component: HomeComponent,
       },
       {
-        path: 'syllabi', component: ListSyllabusComponent ,
-      }
-    ]
+        path: 'login',
+        component: LoginComponent,
+      },
+      {
+        path: 'syllabi',
+        component: ListSyllabusComponent,
+      },
+      {
+        path: 'syllabi/:href',
+        component: SyllabusDetailsComponent,
+      },
+      {
+        path: 'poes',
+        component: PoesComponent,
+      },
+      {
+        path: 'missions',
+        component: MissionsComponent,
+      },
+    ],
   },
 
-  { path: 'admin', component: AdminComponent ,
-  canActivate: [AdminGuard],
-    children:[
+  {
+    path: 'admin',
+    component: AdminComponent,
+    canActivate: [AdminGuard],
+    children: [
       {
-        path: 'users', component: NewUserComponent ,
+        path: 'users',
+        component: NewUserComponent,
       },
       {
-        path: 'courses', component: NewCourseComponent ,
+        path: 'courses',
+        component: NewCourseComponent,
       },
       {
-        path: 'semesters', component: NewSemesterComponent ,
+        path: 'semesters',
+        component: NewSemesterComponent,
       },
       {
-        path: 'syllabi', component: ListSyllabusComponent ,
-      } ,
+        path: 'syllabi',
+        component: ListSyllabusComponent,
+      },
       {
-        path: 'mapping', component: MappingComponent ,
-      } ,
+        path: 'mapping',
+        component: MappingComponent,
+      },
       {
-        path: 'manage_syllabi', component: ManageSyllabiComponent ,
-      } ,
+        path: 'manage_syllabi',
+        component: ManageSyllabiComponent,
+      },
       {
-        path: 'new_syllabus', component: NewSyllabusComponent ,
-      } ,
+        path: 'new_syllabus',
+        component: NewSyllabusComponent,
+      },
       {
-        path: 'portfolios', component: PortfolioListComponent ,
-      } ,
+        path: 'portfolios',
+        component: PortfolioListComponent,
+      },
       {
-        path: 'user_profile', component: UserProfileComponent ,
-      }
-    ]
-  },{
-    path: 'prof', component: ProfessorComponent ,
+        path: 'user_profile',
+        component: UserProfileComponent,
+      },
+    ],
+  },
+  {
+    path: 'prof',
+    component: ProfessorComponent,
     canActivate: [ProfGuard],
-      children:[
-        {
-          path: 'syllabi', component: ListSyllabusComponent ,
-        } ,
-      ]
+    children: [
+      {
+        path: 'syllabi',
+        component: ListSyllabusComponent,
+      },
+    ],
   },
-
 
   { path: '', redirectTo: 'home', pathMatch: 'full' },
   { path: '**', component: PageNotFoundComponent },

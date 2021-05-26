@@ -1,0 +1,47 @@
+<div class="container">
+  <div class="p-m-5">
+    <p-panel header="Mission Statement" [toggleable]="false">
+      The mission of ESIN School at UIR is to deliver a modern computer science curriculum that will equip graduates
+      with
+      strong theoretical and practical backgrounds to enable them to excel in the workplace and to be lifelong learners.
+    </p-panel>
+  </div>
+  <div class="p-text-justify p-m-5">
+    <p-panel header="PROGRAM MISSION" [toggleable]="false">
+      The Computer Science program at UIR is designed to provide students with a strong core understanding of the
+      concepts
+      of computation and information management using modern software and hardware. Computer Science teaches students
+      problem solving techniques to create cutting-edge technology in domains ranging from mobile devices to healthcare
+      to
+      knowledge sharing. The goal of the computer science curriculum is to provide students with the knowledge and tools
+      that allow them to design and implement effective and creative solutions for the needs of the society. The
+      graduates
+      are prepared to work for industry or government agencies, or are in private practice, be able to demonstrate
+      competence and are successfully contributing to the Morocco computer science and information technology workforce.
+    </p-panel>
+  </div>
+
+  <div class="p-m-5">
+    <p-panel header="PEOs Alignment with UIR Mission"  [toggleable]="false">
+      <p-table [value]="poes"  styleClass="p-datatable-gridlines" >
+        <ng-template pTemplate="header">
+          <tr>
+            <th>
+              UIR Mission</th>
+            <th>
+
+              <a [routerLink]="['/poes']" routerLinkActive="router-link-active">POEs</a>
+            </th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-po>
+          <tr>
+            <td>{{po.mission}}</td>
+            <td>{{po.poe}}</td>
+          </tr>
+        </ng-template>
+      </p-table>
+    </p-panel>
+  </div>
+
+</div>

@@ -94,7 +94,7 @@ export class NewCourseComponent implements OnInit {
 
   // get user list
   public getUsers(): void {
-    this.catService.getList('users/forList').subscribe(
+    this.catService.getList('users?projection=forList').subscribe(
       (data: any) => {
         // console.log(data);
         this.users = data._embedded.users;
