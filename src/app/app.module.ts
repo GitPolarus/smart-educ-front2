@@ -1,3 +1,7 @@
+import { SyllabusDetailsComponent } from './pages/syllabi/Syllabus-details/Syllabus-details.component';
+import { MissionsComponent } from './pages/missions/missions.component';
+import { PoesComponent } from './pages/poes/poes.component';
+import { ListSyllabusComponent } from './pages/syllabi/list-syllabus/list-syllabus.component';
 import { MappingComponent } from './pages/syllabi/mapping/mapping.component';
 import { NewSyllabusComponent } from './pages/syllabi/new-syllabus/new-syllabus.component';
 import { UserProfileComponent } from './pages/users/user-profile/user-profile.component';
@@ -63,6 +67,7 @@ import { ChipsModule } from 'primeng/chips';
 import { AutoCompleteModule } from 'primeng/autocomplete';
 import {FileUploadModule} from 'primeng/fileupload';
 import { FileSaverModule } from 'ngx-filesaver';
+import {TooltipModule} from 'primeng/tooltip';
 
 @NgModule({
   declarations: [
@@ -84,6 +89,10 @@ import { FileSaverModule } from 'ngx-filesaver';
     UserProfileComponent,
     NewSyllabusComponent,
     MappingComponent,
+    ListSyllabusComponent,
+    SyllabusDetailsComponent,
+    PoesComponent,
+    MissionsComponent,
   ],
   imports: [
     BrowserModule,
@@ -127,6 +136,7 @@ import { FileSaverModule } from 'ngx-filesaver';
     AutoCompleteModule,
     FileUploadModule,
     FileSaverModule,
+    TooltipModule,
   ],
   providers: [loaderInterceptorProviders, authInterceptorProviders],
   bootstrap: [AppComponent],

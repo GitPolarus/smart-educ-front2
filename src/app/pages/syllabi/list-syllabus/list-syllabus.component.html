@@ -1,0 +1,116 @@
+Con
+<!-- Content Header (Page header) -->
+<section class="content-header">
+  <div class="container-fluid">
+    <div class="row mb-2">
+      <div class="col-sm-6">
+        <h1>Syllabi</h1>
+      </div>
+      <div class="col-sm-6">
+        <ol class="breadcrumb float-sm-right">
+          <li class="breadcrumb-item"><a href="#">Home</a></li>
+          <li class="breadcrumb-item active">List of Syllabi</li>
+        </ol>
+      </div>
+    </div>
+  </div><!-- /.container-fluid -->
+</section>
+  <!-- Tab of syllabus list -->
+
+
+    <div class="card p-p-2">
+      <h5>List of Syllabi</h5>
+      <p-table #dt1 [value]="syllabi" [(selection)]="selectedSyllabi" dataKey="id" [rows]="10"
+        [(contextMenuSelection)]="selectedSyllabus"  [showCurrentPageReport]="true"
+        [rowsPerPageOptions]="[10,25,50]" [loading]="loading" styleClass="p-datatable-gridlines" [paginator]="true"
+        currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+        styleClass="p-datatable-gridlines"
+        [globalFilterFields]="['coordinatorFullName', 'courseName', 'instructorName','archived', 'semesterNumber', 'academicYear']">
+        <ng-template pTemplate="caption">
+          <div class="p-d-flex">
+            <button pButton label="Clear" class="p-button-outlined" icon="pi pi-filter-slash"
+              (click)="clear(dt1)"></button>
+            <span class="p-input-icon-left p-ml-auto">
+              <i class="pi pi-search"></i>
+              <input pInputText type="text" (input)="dt1.filterGlobal($event.target.value, 'contains')"
+                placeholder="Search keyword" />
+            </span>
+          </div>
+        </ng-template>
+        <ng-template pTemplate="header">
+          <tr>
+            <th pSortableColumn="courseName">
+              <div class="p-d-flex p-jc-between p-ai-center">
+                Course
+                <p-sortIcon field="courseName"></p-sortIcon>
+                <p-columnFilter type="text" field="courseName" display="menu" class="p-ml-auto"></p-columnFilter>
+              </div>
+            </th>
+            <th pSortableColumn="coordinatorFullName">
+              <div class="p-d-flex p-jc-between p-ai-center">
+                Coordinator
+                <p-sortIcon field="coordinatorFullName"></p-sortIcon>
+                <p-columnFilter type="text" field="coordinatorFullName" display="menu" class="p-ml-auto">
+                </p-columnFilter>
+              </div>
+            </th>
+            <th pSortableColumn="instructorName">
+              <div class="p-d-flex p-jc-between p-ai-center">
+                Instructor
+                <p-sortIcon field="instructorName"></p-sortIcon>
+                <p-columnFilter type="text" field="instructorName" display="menu" class="p-ml-auto"></p-columnFilter>
+              </div>
+            </th>
+            <th pSortableColumn="semesterNumber">
+              <div class="p-d-flex p-jc-between p-ai-center">
+                Semester
+                <p-sortIcon field="semesterNumber"></p-sortIcon>
+                <p-columnFilter type="text" field="semesterNumber" display="menu" class="p-ml-auto"></p-columnFilter>
+              </div>
+            </th>
+            <th pSortableColumn="academicYear">
+              <div class="p-d-flex p-jc-between p-ai-center">
+                Academic Year
+                <p-sortIcon field="academicYear"></p-sortIcon>
+                <p-columnFilter type="text" field="academicYear" display="menu" class="p-ml-auto"></p-columnFilter>
+              </div>
+            </th>
+            <th>
+              Actions
+            </th>
+
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-syllabus>
+          <tr [pContextMenuRow]="syllabus">
+            <td>
+
+              <a [routerLink]="['/syllabi', onSyllabiItemClick(syllabus._links.self.href)]"
+              routerLinkActive="router-link-active" > {{syllabus.courseName}}</a>
+
+            </td>
+            <td>
+              {{syllabus.coordinatorFullName}}
+            </td>
+            <td>
+              {{syllabus.instructorName}}
+            </td>
+            <td>
+              {{syllabus.semesterNumber}}
+            </td>
+            <td>
+              {{syllabus.academicYear}}
+            </td>
+            <td>
+              <button pButton pRipple type="button" class="p-button-rounded p-button-success p-mr-2" icon="pi pi-file-pdf"
+                 (click)="onDownloadFile(syllabus.syllabusFileName)" pTooltip="Download file" ></button>
+            </td>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="emptymessage">
+          <tr>
+            <td colspan="7">No syllabus found.</td>
+          </tr>
+        </ng-template>
+      </p-table>
+    </div>

@@ -35,6 +35,14 @@ export class VisitorComponent implements OnInit {
         icon: 'pi pi-fw pi-book',
         routerLink: '/syllabi',
       },
+      {
+        label: 'Missions',
+        routerLink: '/missions',
+      },
+      {
+        label: 'POEs',
+        routerLink: '/poes',
+      },
     ];
 
     this.boards = [
