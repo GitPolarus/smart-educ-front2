@@ -54,4 +54,19 @@ href
       }
     );
   }
+
+   /**
+   * onDownloadSyllabusFile
+   */
+    public onDownloadFile(fileName): void {
+    
+      this.catService.getList('syllabi/downloadFile?fileName='+fileName).subscribe(
+        (data: any) => {
+          // console.log(data);
+        },
+        (err) => {
+          console.error(err);
+        }
+      );
+    }
 }

@@ -9,7 +9,6 @@ import { Course } from './../../../models/course.model';
 import { MessageService, MenuItem, ConfirmationService } from 'primeng/api';
 import { Component, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { saveAs } from 'file-saver';
 import {
   FormArray,
   FormBuilder,
@@ -17,8 +16,6 @@ import {
   FormGroup,
   Validators,
 } from '@angular/forms';
-import * as FileSaver from 'file-saver';
-import * as fileSaver from 'file-saver';
 
 class DropdownCourse {
   name: string;
@@ -357,9 +354,10 @@ export class NewSyllabusComponent implements OnInit {
     });
 
     // get CourseOutcomes
-    this.courseOutcomes.forEach((element) => {
-      this.newSyllabus.courseOutcomes.push(element);
-    });
+    // this.courseOutcomes.forEach((element) => {
+    //   this.newSyllabus.courseOutcomes.push(element);
+    // });
+    this.newSyllabus.courseOutcomes =this.courseOutcomes;
   }
 
   /**
@@ -383,7 +381,6 @@ export class NewSyllabusComponent implements OnInit {
       .subscribe(
         (data: any) => {
           console.log(data);
-          this.saveFile(data,this.submittedSyllabus.syllabusFileName)
         },
         (error) => {
           console.error(error);
@@ -391,8 +388,4 @@ export class NewSyllabusComponent implements OnInit {
       );
   }
 
-  saveFile(data: any, filename?: string) {
-    const blob = new Blob([data], {type: 'pdf; charset=utf-8'});
-    fileSaver.saveAs(blob, filename);
-  }
 }

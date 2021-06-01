@@ -3,7 +3,7 @@
     <p-avatar label="SE" size="large" shape="circle" class="p-mr-2" [style]="{'background-color':'#2196F3', 'color': '#ffffff'}" routerLink="/home"></p-avatar>
   </ng-template>
   <ng-template pTemplate="end">
-    <button pButton pRipple *ngIf="isAdmin" type="button" label="Admin Board" class="p-button-rounded p-mr-2" routerLink="/admin" ></button>
+    <button pButton pRipple *ngIf="isAdmin" type="button" label="Admin Board" class="p-button-rounded p-mr-2"  [routerLink]="[ '/admin' ]" routerLinkActive="active" ></button>
       <p-button *ngIf="isLogin"  label="Logout" icon="pi pi-fw pi-sign-out" styleClass="p-button-danger p-button-rounded" (onClick)='logout()'></p-button>
       <button pButton pRipple *ngIf="!isLogin" type="button" label="Login" icon="pi pi-fw pi-sign-in" class="p-button-rounded" routerLink="/login" ></button>
   </ng-template>

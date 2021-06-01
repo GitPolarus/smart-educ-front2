@@ -1,6 +1,5 @@
 import { Semester } from './../../../models/semester.model';
 import { Syllabus } from './../../../models/syllabus.model';
-import { FileSaverService } from 'ngx-filesaver';
 import { MessageService, ConfirmationService } from 'primeng/api';
 import { CatalogueService } from './../../../services/catalogue.service';
 import { AuthService } from './../../../services/auth.service';
@@ -24,7 +23,6 @@ export class MappingComponent implements OnInit {
     private catService: CatalogueService,
     private msgService: MessageService,
     private confirmationService: ConfirmationService,
-    private fileSaverService: FileSaverService
   ) {}
 
   ngOnInit(): void {

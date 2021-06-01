@@ -14,152 +14,166 @@
     </div>
   </div><!-- /.container-fluid -->
 </section>
-  <!-- Main content -->
-  <section class="content">
+<!-- Main content -->
+<section class="content">
+  <pdf-viewer [src]="syllabus.syllabusFileName" [render-text]="true" style="display: block;">
+  </pdf-viewer>
+  <!-- Default box -->
+  <div class="card">
+    <div class="card-header">
+      <h3 class="card-title">Details of Syllabus <b>{{syllabus.courseName}}</b></h3>
 
-    <!-- Default box -->
-    <div class="card">
-      <div class="card-header">
-        <h3 class="card-title">Details of Syllabus <b>{{syllabus.courseName}}</b></h3>
-
-        <div class="card-tools">
-          <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
-            <i class="fas fa-minus"></i>
-          </button>
-          <button type="button" class="btn btn-tool" data-card-widget="remove" title="Remove">
-            <i class="fas fa-times"></i>
-          </button>
-        </div>
+      <div class="card-tools">
+        <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
+          <i class="fas fa-minus"></i>
+        </button>
+        <button type="button" class="btn btn-tool" data-card-widget="remove" title="Remove">
+          <i class="fas fa-times"></i>
+        </button>
       </div>
-      <div class="card-body">
-        <div class="row">
-          <div class="col-12 col-md-12 col-lg-4 order-2 order-md-1">
-            <h3 class="text-primary">{{syllabus.courseName}}</h3>
-            <p class="text-muted">{{syllabus.catalogueDescription}}</p>
-            <br>
-            <div class="text-muted">
-              <p class="text-sm">Instructor
-                <b class="d-block">{{syllabus.instructorName}}</b>
-              </p>
-              <p class="text-sm">Coordinator
-                <b class="d-block">{{syllabus.coordinatorFullName}}</b>
-              </p>
-            </div>
-
-            <h5 class="mt-5 text-muted">Project files</h5>
-            <ul class="list-unstyled">
-              <li>
-                <a href="" class="btn-link text-secondary"><i class="far fa-fw fa-file-word"></i> Functional-requirements.docx</a>
-              </li>
-              <li>
-                <a href="" class="btn-link text-secondary"><i class="far fa-fw fa-file-pdf"></i> UAT.pdf</a>
-              </li>
-              <li>
-                <a href="" class="btn-link text-secondary"><i class="far fa-fw fa-envelope"></i> Email-from-flatbal.mln</a>
-              </li>
-              <li>
-                <a href="" class="btn-link text-secondary"><i class="far fa-fw fa-image "></i> Logo.png</a>
-              </li>
-              <li>
-                <a href="" class="btn-link text-secondary"><i class="far fa-fw fa-file-word"></i> Contract-10_12_2014.docx</a>
-              </li>
-            </ul>
-            <div class="text-center mt-5 mb-3">
-              <a href="#" class="btn btn-sm btn-primary">Add files</a>
-              <a href="#" class="btn btn-sm btn-warning">Report contact</a>
-            </div>
-          </div>
-          <div class="col-12 col-md-12 col-lg-8 order-1 order-md-2">
-            <div class="row">
-              <div class="col-12 col-sm-4">
-                <div class="info-box bg-light">
-                  <div class="info-box-content">
-                    <span class="info-box-text text-center text-muted">Lecture Hours</span>
-                    <span class="info-box-number text-center text-muted mb-0">{{syllabus.lectureHours}}</span>
-                  </div>
-                </div>
-              </div>
-              <div class="col-12 col-sm-4">
-                <div class="info-box bg-light">
-                  <div class="info-box-content">
-                    <span class="info-box-text text-center text-muted">Tutorial Hourst</span>
-                    <span class="info-box-number text-center text-muted mb-0">{{syllabus.tutorialHours}}</span>
-                  </div>
-                </div>
-              </div>
-              <div class="col-12 col-sm-4">
-                <div class="info-box bg-light">
-                  <div class="info-box-content">
-                    <span class="info-box-text text-center text-muted">Lab Hours</span>
-                    <span class="info-box-number text-center text-muted mb-0">{{syllabus.labHours}}</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-12">
-                <h4>Recent Activity</h4>
-                  <div class="post">
-                    <div class="user-block">
-
-                      <span class="username">
-                        Grading
-                     </span>
-                    </div>
-                    <!-- /.user-block -->
-                    <p>
-                      Lorem ipsum represents a long-held tradition for designers,
-                      typographers and the like. Some people hate it and argue for
-                      its demise, but others ignore.
-                    </p>
-
-                    <p>
-                      <a href="#" class="link-black text-sm"><i class="fas fa-link mr-1"></i> Demo File 1 v2</a>
-                    </p>
-                  </div>
-
-                  <div class="post clearfix">
-                    <div class="user-block">
-
-                      <span class="username">
-                        Topical Outlines
-                     </span>
-                    </div>
-                    <!-- /.user-block -->
-                    <p>
-                      Lorem ipsum represents a long-held tradition for designers,
-                      typographers and the like. Some people hate it and argue for
-                      its demise, but others ignore.
-                    </p>
-                    <p>
-                      <a href="#" class="link-black text-sm"><i class="fas fa-link mr-1"></i> Demo File 2</a>
-                    </p>
-                  </div>
-
-                  <div class="post">
-                    <div class="user-block">
-                        Course Outcomes
-                    </div>
-                    <!-- /.user-block -->
-                    <p>
-                    <li *ngFor="let co of courseOutcomes">
-                      {{co.co}}
-                    </li>
-                    </p>
-
-                    <p>
-                      <a href="#" class="link-black text-sm"><i class="fas fa-link mr-1"></i> Demo File 1 v1</a>
-                    </p>
-                  </div>
-              </div>
-            </div>
-          </div>
-
-        </div>
-      </div>
-      <!-- /.card-body -->
     </div>
-    <!-- /.card -->
+    <div class="card-body">
+      <div class="row">
+        <div class="col-12 col-md-12 col-lg-4 order-1 order-md-1">
+          <h3 class="text-primary">{{syllabus.courseName}}</h3>
+          <p class="text-muted">{{syllabus.catalogueDescription}}</p>
+          <br>
+          <div class="text-muted">
+            <p class="text-sm">Instructor
+              <b class="d-block">{{syllabus.instructorName}}</b>
+            </p>
+            <p class="text-sm">Coordinator
+              <b class="d-block">{{syllabus.coordinatorFullName}}</b>
+            </p>
+          </div>
 
-  </section>
-  <!-- /.content -->
+          <div *ngIf="syllabus.textBooks.length > 0">
+            <h5 class="mt-5 text-muted">Text Books</h5>
+            <ul class="list-unstyled">
+              <li *ngFor="let item of syllabus.textBooks">
+                <i class="far fa-fw fa-file"></i>
+                {{item.reference}}</li>
+            </ul>
+          </div>
+          <div class="text-center mt-5 mb-3">
+            <a  class="btn btn-sm btn-primary" (click)="onDownloadFile(syllabus.syllabusFileName)" pTooltip="Download file">   <i class="pi pi-file-pdf"></i>Download File</a>
+            
+          </div>
+        </div>
+        <div class="col-12 col-md-12 col-lg-8 order-1 order-md-2">
+          <div class="row post clearfix">
+            <div class="col-12 col-sm-4">
+              <div class="info-box bg-light">
+                <div class="info-box-content">
+                  <span class="info-box-text text-center text-muted">Lecture Hours</span>
+                  <span class="info-box-number text-center text-muted mb-0">{{syllabus.lectureHours}}</span>
+                </div>
+              </div>
+            </div>
+            <div class="col-12 col-sm-4">
+              <div class="info-box bg-light">
+                <div class="info-box-content">
+                  <span class="info-box-text text-center text-muted">Tutorial Hourst</span>
+                  <span class="info-box-number text-center text-muted mb-0">{{syllabus.tutorialHours}}</span>
+                </div>
+              </div>
+            </div>
+            <div class="col-12 col-sm-4">
+              <div class="info-box bg-light">
+                <div class="info-box-content">
+                  <span class="info-box-text text-center text-muted">Lab Hours</span>
+                  <span class="info-box-number text-center text-muted mb-0">{{syllabus.labHours}}</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-12">
+
+              <div class="post  clearfix">
+                <h4>Gradings</h4>
+                <p-table [value]="syllabus.gradings"  styleClass="p-datatable-gridlines">
+                  <ng-template pTemplate="header">
+                    <tr>
+                      <th>Item</th>
+                      <th>%</th>
+                    </tr>
+                  </ng-template>
+                  <ng-template pTemplate="body" let-grading>
+                    <tr>
+                      <td>{{grading.item}}</td>
+                      <td>{{grading.percentage}}</td>
+                    </tr>
+                  </ng-template>
+                </p-table>
+
+              </div>
+
+              <div class="post clearfix">
+                <h4>Topical Outline</h4>
+                <p-table [value]="syllabus.topicalOutlines"  styleClass="p-datatable-gridlines">
+                  <ng-template pTemplate="header">
+                    <tr>
+                      <th>Week</th>
+                      <th>Chapter</th>
+                      <th>Lecture Topic</th>
+                    </tr>
+                  </ng-template>
+                  <ng-template pTemplate="body" let-to>
+                    <tr>
+                      <td>{{to.weekNumber}}</td>
+                      <td>{{to.chapter}}</td>
+                      <td>{{to.lectureTopic}}</td>
+                    </tr>
+                  </ng-template>
+                </p-table>
+              </div>
+
+              <div class="post clearfix">
+                <h4>Course Outcomes</h4>
+                <div class="p-mb-1">
+                  <ol>
+                    <li *ngFor="let item of courseOutcomes">
+                      {{item.co}}
+                    </li>
+                  </ol>
+                </div>
+                <p-table [value]="courseOutcomes"  styleClass="p-datatable-gridlines">
+                  <ng-template pTemplate="header">
+                    <tr>
+                      <th>so1</th>
+                      <th>so2</th>
+                      <th>so3</th>
+                      <th>so4</th>
+                      <th>so5</th>
+                      <th>so6</th>
+                      <th>so7</th>
+                    </tr>
+                  </ng-template>
+                  <ng-template pTemplate="body" let-courseOutcome>
+                    <tr>
+                      <td>{{courseOutcome.so1}}</td>
+                      <td>{{courseOutcome.so2}}</td>
+                      <td>{{courseOutcome.so3}}</td>
+                      <td>{{courseOutcome.so4}}</td>
+                      <td>{{courseOutcome.so5}}</td>
+                      <td>{{courseOutcome.so6}}</td>
+                      <td>{{courseOutcome.so7}}</td>
+                    </tr>
+                  </ng-template>
+                </p-table>
+              </div>
+
+
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+    <!-- /.card-body -->
+  </div>
+  <!-- /.card -->
+
+</section>
+<!-- /.content -->

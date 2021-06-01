@@ -40,7 +40,7 @@
         </div>
 
 
-        <div class="p-field p-col-12 p-mb-10">
+       <!--  <div class="p-field p-col-12 p-mb-10">
           <label for="syllabusFile">Syllabus File</label>
 
           <p-fileUpload name="file" url="http://localhost:8080/filestorage/upload" (onUpload)="onUpload($event)"
@@ -48,11 +48,11 @@
             <ng-template pTemplate="content">
               <ul *ngIf="fileUploaded">
                 {{file.name}} uploaded
-                <!-- <li *ngFor="let file of uploadedFiles"></li> -->
+              
               </ul>
             </ng-template>
           </p-fileUpload>
-        </div>
+        </div> -->
 
       </div>
 
@@ -85,7 +85,7 @@
         <div class="p-field p-col-12 p-md-3">
           <label for="creditHours">Credit Hours</label>
           <p-inputNumber [(ngModel)]="newSyllabus.creditHours" [showButtons]="true" buttonLayout="horizontal"
-            inputId="creditHours" spinnerMode="horizontal" [step]="0.5" [min]=0 decrementButtonClass="p-button-danger"
+            inputId="creditHours" spinnerMode="horizontal" [step]="12" [min]=0 decrementButtonClass="p-button-danger"
             incrementButtonClass="p-button-success" incrementButtonIcon="pi pi-plus" decrementButtonIcon="pi pi-minus">
           </p-inputNumber>
         </div>

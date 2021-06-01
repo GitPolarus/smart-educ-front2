@@ -66,9 +66,8 @@ import { FieldsetModule } from 'primeng/fieldset';
 import { ChipsModule } from 'primeng/chips';
 import { AutoCompleteModule } from 'primeng/autocomplete';
 import {FileUploadModule} from 'primeng/fileupload';
-import { FileSaverModule } from 'ngx-filesaver';
 import {TooltipModule} from 'primeng/tooltip';
-
+import { PdfViewerModule } from 'ng2-pdf-viewer';
 @NgModule({
   declarations: [
     AppComponent,
@@ -135,8 +134,8 @@ import {TooltipModule} from 'primeng/tooltip';
     ChipsModule,
     AutoCompleteModule,
     FileUploadModule,
-    FileSaverModule,
     TooltipModule,
+    PdfViewerModule,
   ],
   providers: [loaderInterceptorProviders, authInterceptorProviders],
   bootstrap: [AppComponent],

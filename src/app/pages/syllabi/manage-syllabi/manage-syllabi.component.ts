@@ -6,8 +6,6 @@ import { AuthService } from './../../../services/auth.service';
 import { MenuItem, MessageService, ConfirmationService } from 'primeng/api';
 import { Syllabus } from './../../../models/syllabus.model';
 import { Component, OnInit } from '@angular/core';
-import * as fileSaver from 'file-saver';
-import { FileSaverService } from 'ngx-filesaver';
 
 @Component({
   selector: 'app-manage-syllabi',
@@ -30,7 +28,6 @@ export class ManageSyllabiComponent implements OnInit {
     private catService: CatalogueService,
     private msgService: MessageService,
     private confirmationService: ConfirmationService,
-    private fileSaverService: FileSaverService
   ) {}
 
   ngOnInit(): void {
@@ -88,7 +85,7 @@ export class ManageSyllabiComponent implements OnInit {
       (data: any) => {
         console.log(data);
         // this.saveFile(data, fileName);
-        this.fileSaverService.save(data.filename, fileName);
+        // this.fileSaverService.save(data.filename, fileName);
       },
       (err) => {
         console.error(err);
