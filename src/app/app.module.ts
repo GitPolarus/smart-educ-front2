@@ -68,6 +68,8 @@ import { AutoCompleteModule } from 'primeng/autocomplete';
 import {FileUploadModule} from 'primeng/fileupload';
 import {TooltipModule} from 'primeng/tooltip';
 import { PdfViewerModule } from 'ng2-pdf-viewer';
+import {ChartModule} from 'primeng/chart';
+import { DashboardAdminComponent } from './pages/dashboard-admin/dashboard-admin.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -92,6 +94,7 @@ import { PdfViewerModule } from 'ng2-pdf-viewer';
     SyllabusDetailsComponent,
     PoesComponent,
     MissionsComponent,
+    DashboardAdminComponent,
   ],
   imports: [
     BrowserModule,
@@ -136,6 +139,7 @@ import { PdfViewerModule } from 'ng2-pdf-viewer';
     FileUploadModule,
     TooltipModule,
     PdfViewerModule,
+    ChartModule,
   ],
   providers: [loaderInterceptorProviders, authInterceptorProviders],
   bootstrap: [AppComponent],

@@ -21,6 +21,7 @@ import { PageNotFoundComponent } from './pages/page-not-found/page-not-found.com
 import { VisitorComponent } from './views/visitor/visitor.component';
 import { LoginComponent } from './pages/login/login.component';
 import { NgModule } from '@angular/core';
+import { DashboardAdminComponent } from './pages/dashboard-admin/dashboard-admin.component';
 
 const routes: Routes = [
   {
@@ -66,6 +67,10 @@ const routes: Routes = [
       {
         path: 'users',
         component: NewUserComponent,
+      },
+      {
+        path: 'dashboard',
+        component: DashboardAdminComponent,
       },
       {
         path: 'courses',

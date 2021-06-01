@@ -38,13 +38,13 @@
         <!-- Add icons to the links using the .nav-icon class
              with font-awesome or any other icon font library -->
         <li class="nav-item">
-          <a href="#" class="nav-link">
+          <a routerLink="/admin/dashboard" routerLinkActive class="nav-link" class="nav-link">
             <i class="nav-icon fas fa-tachometer-alt"></i>
             <p>
               Dashboard
-              <i class="right fas fa-angle-left"></i>
+              <!-- <i class="right fas fa-angle-left"></i> -->
             </p>
-          </a>
+          </a><!-- 
           <ul class="nav nav-treeview">
             <li class="nav-item">
               <a routerLink="/admin" class="nav-link">
@@ -64,15 +64,15 @@
                 <p>Dashboard v3</p>
               </a>
             </li>
-          </ul>
+          </ul> -->
         </li>
-        <li class="nav-header">EXAMPLES</li>
+        <li class="nav-header">Functionalities</li>
         <li class="nav-item">
           <a  routerLink="/admin/users" routerLinkActive class="nav-link">
-            <i class="nav-icon far fa-calendar-alt"></i>
+            <i class="nav-icon fa fa-users"></i>
             <p>
               Users
-              <span class="badge badge-info right">2</span>
+              <span class="badge badge-info right">{{countNumbers.usersNumber}}</span>
             </p>
           </a>
         </li>
@@ -81,6 +81,7 @@
             <i class="nav-icon far fa-image"></i>
             <p>
               Courses
+              <span class="badge badge-info right">{{countNumbers.coursesNumber}}</span>
             </p>
           </a>
         </li>
@@ -89,15 +90,17 @@
             <i class="nav-icon far fa-image"></i>
             <p>
               Semesters
+              <span class="badge badge-info right">{{countNumbers.semestersNumber}}</span>
             </p>
           </a>
         </li>
 
         <li class="nav-item">
-          <a class="nav-link">
+          <a routerLink="/admin/manage_syllabi" routerLinkActive class="nav-link">
             <i class="nav-icon far fa-envelope"></i>
             <p>
               Syllabus
+             
               <i class="fas fa-angle-left right"></i>
             </p>
           </a>
@@ -105,7 +108,7 @@
             <li class="nav-item">
               <a routerLink="/admin/manage_syllabi" routerLinkActive class="nav-link">
                 <i class="far fa-circle nav-icon"></i>
-                <p>List</p>
+                <p>List</p> <span class="badge badge-info right">{{countNumbers.syllabiNumber}}</span>
               </a>
             </li>
             <li class="nav-item">
@@ -123,6 +126,7 @@
             <i class="nav-icon far fa-image"></i>
             <p>
               Portfolios
+              <span class="badge badge-info right">{{countNumbers.portfoliosNumber}}</span>
             </p>
           </a>
         </li>
