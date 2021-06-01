@@ -16,12 +16,20 @@ export class SidebarComponent implements OnInit {
   constructor(private authService: AuthService) {
     this.isLogin = authService.isUserLogged();
     this.user = new UserAccount();
+    
+    
    }
 
   ngOnInit() {
     if (this.isLogin) {
       this.user = this.authService.getUser();
+      console.log(this.user);
     }
+  }
+
+  onProfileClick(email): string{
+    // console.log(href);
+    return btoa(email);
   }
 
 }

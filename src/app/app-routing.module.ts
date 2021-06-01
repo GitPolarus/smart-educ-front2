@@ -96,7 +96,7 @@ const routes: Routes = [
         component: PortfolioListComponent,
       },
       {
-        path: 'user_profile',
+        path: 'user_profile/:email',
         component: UserProfileComponent,
       },
     ],
