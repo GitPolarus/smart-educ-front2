@@ -6,8 +6,8 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
   providedIn: 'root',
 })
 export class CatalogueService {
-  public baseUrl = "https://smart-educ-back.herokuapp.com/";
-  // public baseUrl = 'http://localhost:8080/';
+  // public baseUrl = "https://smart-educ-back.herokuapp.com/";
+  public baseUrl = 'http://localhost:8080/';
   public httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
   };
