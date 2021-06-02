@@ -12,8 +12,11 @@ import { CatalogueService } from 'src/app/services/catalogue.service';
 export class SidebarComponent implements OnInit {
   countNumbers: any = [];
   public isLogin = false;
+  isAdmin: boolean = false;
   public user : UserAccount;
+  baseUrl: string;
   @Input() public display = false;
+
   constructor(private authService: AuthService,
     private catService:CatalogueService) {
     this.isLogin = authService.isUserLogged();
@@ -23,9 +26,12 @@ export class SidebarComponent implements OnInit {
    }
 
   ngOnInit() {
+    
     if (this.isLogin) {
       this.user = this.authService.getUser();
-      // console.log(this.user);
+      this.baseUrl = AuthService.redirectUrl;
+      this.isAdmin =this.authService.isUserAdmin();
+      // console.log(AuthService.redirectUrl);
     }
     this.getCountNumbers()
   }

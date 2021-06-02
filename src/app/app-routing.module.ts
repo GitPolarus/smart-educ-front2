@@ -22,6 +22,10 @@ import { VisitorComponent } from './views/visitor/visitor.component';
 import { LoginComponent } from './pages/login/login.component';
 import { NgModule } from '@angular/core';
 import { DashboardAdminComponent } from './pages/dashboard-admin/dashboard-admin.component';
+import { PermissionNotGrantedComponent } from './pages/permission-not-granted/permission-not-granted.component';
+import { DashboardProfComponent } from './pages/dashboard-prof/dashboard-prof.component';
+import { ProfSyllabiComponent } from './pages/syllabi/prof-syllabi/prof-syllabi.component';
+import { NewCourseAssessmentComponent } from './pages/course-assessment/new-course-assessment/new-course-assessment.component';
 
 const routes: Routes = [
   {
@@ -69,6 +73,10 @@ const routes: Routes = [
         component: NewUserComponent,
       },
       {
+        path: 'syllabi/:href',
+        component: SyllabusDetailsComponent,
+      },
+      {
         path: 'dashboard',
         component: DashboardAdminComponent,
       },
@@ -113,13 +121,26 @@ const routes: Routes = [
     children: [
       {
         path: 'syllabi',
-        component: ListSyllabusComponent,
+        component: ProfSyllabiComponent,
+      },
+      {
+        path: 'course_assessment',
+        component: NewCourseAssessmentComponent,
+      },
+      {
+        path: 'user_profile/:email',
+        component: UserProfileComponent,
+      },
+      {
+        path: 'dashboard',
+        component: DashboardProfComponent,
       },
     ],
   },
-
+  { path: 'not-allowed', component: PermissionNotGrantedComponent },
   { path: '', redirectTo: 'home', pathMatch: 'full' },
   { path: '**', component: PageNotFoundComponent },
+ 
 ];
 
 @NgModule({

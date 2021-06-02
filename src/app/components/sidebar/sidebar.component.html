@@ -15,7 +15,7 @@
         <img src="assets/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
       </div>
       <div class="info">
-        <a  [routerLink]="['/admin/user_profile', onProfileClick(user.email)]"
+        <a  [routerLink]="['/'+baseUrl+'/user_profile', onProfileClick(user.email)]"
         routerLinkActive="router-link-active" class="d-block">{{user.lastName +' '+ user.firstName}}</a>
       </div>
     </div>
@@ -38,7 +38,7 @@
         <!-- Add icons to the links using the .nav-icon class
              with font-awesome or any other icon font library -->
         <li class="nav-item">
-          <a routerLink="/admin/dashboard" routerLinkActive class="nav-link" class="nav-link">
+          <a  [routerLink]="['/'+baseUrl+'/dashboard']" routerLinkActive class="nav-link" class="nav-link">
             <i class="nav-icon fas fa-tachometer-alt"></i>
             <p>
               Dashboard
@@ -67,70 +67,90 @@
           </ul> -->
         </li>
         <li class="nav-header">Functionalities</li>
-        <li class="nav-item">
-          <a  routerLink="/admin/users" routerLinkActive class="nav-link">
-            <i class="nav-icon fa fa-users"></i>
-            <p>
-              Users
-              <span class="badge badge-info right">{{countNumbers.usersNumber}}</span>
-            </p>
-          </a>
-        </li>
-        <li class="nav-item">
-          <a routerLink="/admin/courses" routerLinkActive class="nav-link">
-            <i class="nav-icon far fa-image"></i>
-            <p>
-              Courses
-              <span class="badge badge-info right">{{countNumbers.coursesNumber}}</span>
-            </p>
-          </a>
-        </li>
-         <li class="nav-item">
-          <a routerLink="/admin/semesters" routerLinkActive class="nav-link">
-            <i class="nav-icon far fa-image"></i>
-            <p>
-              Semesters
-              <span class="badge badge-info right">{{countNumbers.semestersNumber}}</span>
-            </p>
-          </a>
-        </li>
+        <ng-container *ngIf="isAdmin; else elseTemplate">
+          <li class="nav-item">
+            <a  routerLink="/admin/users" routerLinkActive class="nav-link">
+              <i class="nav-icon fa fa-users"></i>
+              <p>
+                Users
+                <span class="badge badge-info right">{{countNumbers.usersNumber}}</span>
+              </p>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a routerLink="/admin/courses" routerLinkActive class="nav-link">
+              <i class="nav-icon far fa-image"></i>
+              <p>
+                Courses
+                <span class="badge badge-info right">{{countNumbers.coursesNumber}}</span>
+              </p>
+            </a>
+          </li>
+           <li class="nav-item">
+            <a routerLink="/admin/semesters" routerLinkActive class="nav-link">
+              <i class="nav-icon far fa-image"></i>
+              <p>
+                Semesters
+                <span class="badge badge-info right">{{countNumbers.semestersNumber}}</span>
+              </p>
+            </a>
+          </li>
+  
+          <li class="nav-item">
+            <a routerLink="/admin/manage_syllabi" routerLinkActive class="nav-link">
+              <i class="nav-icon far fa-envelope"></i>
+              <p>
+                Syllabus
+               
+                <i class="fas fa-angle-left right"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a routerLink="/admin/manage_syllabi" routerLinkActive class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>List</p> <span class="badge badge-info right">{{countNumbers.syllabiNumber}}</span>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a routerLink="/admin/mapping" routerLinkActive class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>mapping</p>
+                </a>
+              </li>
+  
+            </ul>
+          </li>
+  
+           <li class="nav-item">
+            <a routerLink="/admin/portfolios" routerLinkActive class="nav-link">
+              <i class="nav-icon far fa-image"></i>
+              <p>
+                Portfolios
+                <span class="badge badge-info right">{{countNumbers.portfoliosNumber}}</span>
+              </p>
+            </a>
+          </li>
+  
+        </ng-container>
+        <ng-template #elseTemplate>
+          <li class="nav-item">
+            <a routerLink="/prof/syllabi" routerLinkActive class="nav-link">
+              <i class="far fa-circle nav-icon"></i>
+              <p>Syllabus</p>
+            </a>
+          </li>
 
-        <li class="nav-item">
-          <a routerLink="/admin/manage_syllabi" routerLinkActive class="nav-link">
-            <i class="nav-icon far fa-envelope"></i>
-            <p>
-              Syllabus
-             
-              <i class="fas fa-angle-left right"></i>
-            </p>
-          </a>
-          <ul class="nav nav-treeview">
-            <li class="nav-item">
-              <a routerLink="/admin/manage_syllabi" routerLinkActive class="nav-link">
-                <i class="far fa-circle nav-icon"></i>
-                <p>List</p> <span class="badge badge-info right">{{countNumbers.syllabiNumber}}</span>
-              </a>
-            </li>
-            <li class="nav-item">
-              <a routerLink="/admin/mapping" routerLinkActive class="nav-link">
-                <i class="far fa-circle nav-icon"></i>
-                <p>mapping</p>
-              </a>
-            </li>
-
-          </ul>
-        </li>
-
-         <li class="nav-item">
-          <a routerLink="/admin/portfolios" routerLinkActive class="nav-link">
-            <i class="nav-icon far fa-image"></i>
-            <p>
-              Portfolios
-              <span class="badge badge-info right">{{countNumbers.portfoliosNumber}}</span>
-            </p>
-          </a>
-        </li>
-
+          <li class="nav-item">
+            <a routerLink="/prof/course_assessment" routerLinkActive class="nav-link">
+              <i class="far fa-circle nav-icon"></i>
+              <p>Course Assements</p>
+            </a>
+          </li>
+        </ng-template>
+        
+       
+      
       </ul>
     </nav>
     <!-- /.sidebar-menu -->

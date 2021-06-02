@@ -22,7 +22,7 @@
 <!-- Toolbar -->
 <p-dialog header="New Syllabus" [(visible)]="displayDialog" [modal]="true" [style]="{width: '50vw'}"
   [maximizable]="true" [baseZIndex]="10000" [draggable]="false" [resizable]="false">
-  <app-new-syllabus></app-new-syllabus>
+  <app-new-syllabus [isAdmin]="true"></app-new-syllabus>
 </p-dialog>
 
 <div class="p-grid p-formgrid">

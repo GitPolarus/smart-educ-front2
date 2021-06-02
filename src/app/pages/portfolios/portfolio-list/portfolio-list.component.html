@@ -1,3 +1,102 @@
-<p>
-  portfolio-list works!
-</p>
+<!-- Content Header (Page header) -->
+<section class="content-header">
+  <div class="container-fluid">
+    <div class="row mb-2">
+      <div class="col-sm-6">
+        <h1>Portfolios</h1>
+      </div>
+      <div class="col-sm-6">
+        <ol class="breadcrumb float-sm-right">
+          <li class="breadcrumb-item"><a href="#">Home</a></li>
+          <li class="breadcrumb-item active">List of Portfolio</li>
+        </ol>
+      </div>
+    </div>
+  </div><!-- /.container-fluid -->
+</section>
+  <!-- Tab of syllabus list -->
+  <div class="card p-p-2">
+    <h5>List of Portfolio</h5>
+    <p-table #dt1 [value]="portfolios"dataKey="id" [rows]="10"
+        [showCurrentPageReport]="true"
+      [rowsPerPageOptions]="[10,25,50]" [loading]="loading" styleClass="p-datatable-gridlines" [paginator]="true"
+      currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+      styleClass="p-datatable-gridlines"
+      [globalFilterFields]="['courseName', 'instructorEmail','archived', 'semesterNumber', 'academicYear']">
+      <ng-template pTemplate="caption">
+        <div class="p-d-flex">
+          <button pButton label="Clear" class="p-button-outlined" icon="pi pi-filter-slash"
+            (click)="clear(dt1)"></button>
+          <span class="p-input-icon-left p-ml-auto">
+            <i class="pi pi-search"></i>
+            <input pInputText type="text" (input)="dt1.filterGlobal($event.target.value, 'contains')"
+              placeholder="Search keyword" />
+          </span>
+        </div>
+      </ng-template>
+      <ng-template pTemplate="header">
+        <tr>
+          <th pSortableColumn="courseName">
+            <div class="p-d-flex p-jc-between p-ai-center">
+              Syllabus
+              <p-sortIcon field="courseName"></p-sortIcon>
+              <p-columnFilter type="text" field="courseName" display="menu" class="p-ml-auto"></p-columnFilter>
+            </div>
+          </th>
+          <th pSortableColumn="instructorEmail">
+            <div class="p-d-flex p-jc-between p-ai-center">
+              Instructor Email
+              <p-sortIcon field="instructorEmail"></p-sortIcon>
+              <p-columnFilter type="text" field="instructorEmail" display="menu" class="p-ml-auto"></p-columnFilter>
+            </div>
+          </th>
+          <th pSortableColumn="semesterNumber">
+            <div class="p-d-flex p-jc-between p-ai-center">
+              Semester
+              <p-sortIcon field="semesterNumber"></p-sortIcon>
+              <p-columnFilter type="text" field="semesterNumber" display="menu" class="p-ml-auto"></p-columnFilter>
+            </div>
+          </th>
+          <th pSortableColumn="academicYear">
+            <div class="p-d-flex p-jc-between p-ai-center">
+              Academic Year
+              <p-sortIcon field="academicYear"></p-sortIcon>
+              <p-columnFilter type="text" field="academicYear" display="menu" class="p-ml-auto"></p-columnFilter>
+            </div>
+          </th>
+          <th>
+            Actions
+          </th>
+
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-portfolio>
+        <tr [pContextMenuRow]="portfolio">
+          <td>
+
+            <a [routerLink]="['/admin/syllabi', onSyllabiItemClick(portfolio.id)]"
+            routerLinkActive="router-link-active" > {{portfolio.courseName}}</a>
+
+          </td>
+          <td>
+            {{portfolio.instructorEmail}}
+          </td>
+          <td>
+            {{portfolio.semesterNumber}}
+          </td>
+          <td>
+            {{portfolio.academicYear}}
+          </td>
+          <td>
+            <button pButton pRipple type="button" class="p-button-rounded p-button-success p-mr-2" icon="pi pi-file-pdf"
+               pTooltip="Download file" ></button>
+          </td>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="emptymessage">
+        <tr>
+          <td colspan="7">No portfolio found.</td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </div>

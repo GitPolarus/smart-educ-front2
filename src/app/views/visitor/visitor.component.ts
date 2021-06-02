@@ -13,6 +13,8 @@ export class VisitorComponent implements OnInit {
   items: MenuItem[];
   isLogin = false;
   isAdmin = false;
+  isCoordinator = false;
+  isInstructor = false;
 
   constructor(private authService: AuthService){
     this.isLogin = authService.isUserLogged();
@@ -22,6 +24,8 @@ export class VisitorComponent implements OnInit {
 
     if (this.isLogin) {
       this.isAdmin = this.authService.isUserAdmin();
+      this.isCoordinator = this.authService.isUserCoordinator();
+      this.isInstructor = this.authService.isUserInstructor();
     }
 
     this.items = [

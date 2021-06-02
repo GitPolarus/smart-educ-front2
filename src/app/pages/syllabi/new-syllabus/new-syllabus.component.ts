@@ -7,7 +7,7 @@ import { Syllabus } from './../../../models/syllabus.model';
 import { UserAccount } from './../../../models/useraccount.model';
 import { Course } from './../../../models/course.model';
 import { MessageService, MenuItem, ConfirmationService } from 'primeng/api';
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Subscription } from 'rxjs';
 import {
   FormArray,
@@ -58,7 +58,12 @@ export class NewSyllabusComponent implements OnInit {
 
   tos: any[] = [];
   gradings: any[] = [];
-  selectedInstructor: UserAccount = new UserAccount();
+
+  @Input() selectedInstructor: UserAccount = new UserAccount();
+
+  @Input() isAdmin:boolean = true;
+
+  @Output() newSaveEvent = new EventEmitter();
 
   poids = [
     { label: 'None', value: '' },
@@ -76,7 +81,7 @@ export class NewSyllabusComponent implements OnInit {
   filteredCourses: Course[];
   filteredUsers: UserAccount[];
 
-  submitted = false;
+  submitted:boolean = false;
   submittedSyllabus: Syllabus = new Syllabus();
   constructor(
     private authService: AuthService,
@@ -118,6 +123,10 @@ export class NewSyllabusComponent implements OnInit {
     this.newSyllabus = new Syllabus();
     this.tbForm.addControl('tb', this.formArray);
     this.formArray.push(this.addFormControl());
+  }
+
+  refreshSyllabusList() {
+    this.newSaveEvent.emit('saved');
   }
 
   /**
@@ -315,6 +324,7 @@ export class NewSyllabusComponent implements OnInit {
         });
         this.submitted = true;
         this.submittedSyllabus = data;
+        this.refreshSyllabusList();
         this.getSyllabi();
       },
       (err) => {

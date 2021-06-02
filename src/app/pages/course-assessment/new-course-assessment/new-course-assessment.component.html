@@ -1,0 +1,70 @@
+<section class="content-header">
+  <div class="container-fluid">
+    <div class="row mb-2">
+      <div class="col-sm-6">
+        <h1>Course Assessment</h1>
+      </div>
+      <div class="col-sm-6">
+        <ol class="breadcrumb float-sm-right">
+          <li class="breadcrumb-item"><a href="#">Home</a></li>
+          <li class="breadcrumb-item active">Course Assessment</li>
+        </ol>
+      </div>
+    </div>
+  </div><!-- /.container-fluid -->
+</section>
+
+<div class="card p-m-5">
+
+  <p-table [value]="courseOutcomes" dataKey="id" styleClass="p-datatable-gridlines">
+    <ng-template pTemplate="caption">
+      <div class="p-d-flex">
+          <span class="p-input-icon-left p-ml-auto">
+            <div class="p-fluid p-mb-1">
+              <p-dropdown [options]="syllabi" [(ngModel)]="selectedSyllabus" placeholder="Select a Syllabus"
+                optionLabel="courseName" (click)="onClikItem(selectedSyllabus)" [showClear]="true" id="syllabusCourse"></p-dropdown>
+            </div>
+        </span>
+      </div>
+    </ng-template>
+    <ng-template pTemplate="header">
+      <tr>
+        <th>Course Outcomes</th>
+        <th>% of Student Validated</th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-co>
+      <tr>
+
+        <td pEditableColumn>
+          <p-cellEditor>
+            <ng-template pTemplate="output">
+              {{co.co}}
+            </ng-template>
+          </p-cellEditor>
+        </td>
+
+        <td pEditableColumn>
+          <p-cellEditor>
+            <ng-template pTemplate="input">
+              <p-inputNumber [(ngModel)]="co.validationPercentage" [showButtons]="true" buttonLayout="horizontal"
+            inputId="creditHours" spinnerMode="horizontal" [step]="10" [min]=0 [max]=100 decrementButtonClass="p-button-danger"
+            incrementButtonClass="p-button-success" incrementButtonIcon="pi pi-plus" decrementButtonIcon="pi pi-minus">
+          </p-inputNumber>
+            </ng-template>
+            <ng-template pTemplate="output">
+              {{co.validationPercentage}}
+            </ng-template>
+          </p-cellEditor>
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>
+  <p-footer >
+    <div *ngIf="courseOutcomes.length>0" class="p-text-right">
+      <button pButton type="button" label="Save" class="p-button-success p-m-2" icon="pi pi-save" iconPos="left"
+      (click)="onSave()"></button>
+    </div>
+  </p-footer>
+</div>
+

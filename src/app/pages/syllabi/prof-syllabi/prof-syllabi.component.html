@@ -1,4 +1,3 @@
-<!-- Content Header (Page header) -->
 <section class="content-header">
   <div class="container-fluid">
     <div class="row mb-2">
@@ -8,22 +7,60 @@
       <div class="col-sm-6">
         <ol class="breadcrumb float-sm-right">
           <li class="breadcrumb-item"><a href="#">Home</a></li>
-          <li class="breadcrumb-item active">List of Syllabi</li>
+          <li class="breadcrumb-item active">Manage Syllabi</li>
         </ol>
       </div>
     </div>
   </div><!-- /.container-fluid -->
 </section>
+
+<p-dialog header="New Syllabus" [(visible)]="displayDialog" [modal]="true" [style]="{width: '50vw'}"
+  [maximizable]="true" [baseZIndex]="10000" [draggable]="false" [resizable]="false">
+  <app-new-syllabus [isAdmin]="false" [selectedInstructor]="user" (newItemEvent)="getSyllabiByProfName()">
+  </app-new-syllabus>
+</p-dialog>
+
+<p-confirmDialog [style]="{width: '450px'}"></p-confirmDialog>
+<!-- Toast -->
+<p-toast key="toast"></p-toast><!-- Toast -->
+<!-- Menu Context -->
+<p-contextMenu #cm [model]="items"></p-contextMenu>
+
+<div class="p-grid p-formgrid">
+  <div class="p-col-12 p-mb-5">
+    <p-toolbar>
+      <div class="p-toolbar-group-left">
+        <p-button label="New" icon="pi pi-plus" class="p-button-success p-mr-2" (click)="newSyllabusDialog()">
+        </p-button>
+        <!-- <p-button label="Update" icon="pi pi-pencil" styleClass="p-button-success"></p-button> -->
+        <button pButton pRipple label="My Syllabi" icon="pi pi-bars" class="p-button-secondary p-mr-2"
+          (click)="getSyllabiByProfName()"></button>
+        <button pButton pRipple label="All Syllabi" icon="pi pi-bars" class="p-button-info"
+          (click)="getSyllabi()"></button>
+      </div>
+
+      <div class="p-toolbar-group-right">
+        <button type="button" pButton pRipple icon="pi pi-file-o" class="p-mr-2" pTooltip="CSV"
+          tooltipPosition="bottom"></button>
+        <button type="button" pButton pRipple icon="pi pi-file-excel" class="p-button-success p-mr-2" pTooltip="XLS"
+          tooltipPosition="bottom"></button>
+        <button type="button" pButton pRipple icon="pi pi-file-pdf" class="p-button-warning p-mr-2" pTooltip="PDF"
+          tooltipPosition="bottom"></button>
+        <!-- <button type="button" pButton pRipple icon="pi pi-file-o" (click)="dt.exportCSV()" class="p-mr-2" pTooltip="CSV" tooltipPosition="bottom"></button> -->
+      </div>
+    </p-toolbar>
+  </div>
+
   <!-- Tab of syllabus list -->
 
-
+  <p-panel class="p-col-12">
     <div class="card p-p-2">
-      <h5>List of Syllabi</h5>
+      <h5>Syllabus List</h5>
       <p-table #dt1 [value]="syllabi" [(selection)]="selectedSyllabi" dataKey="id" [rows]="10"
-        [(contextMenuSelection)]="selectedSyllabus"  [showCurrentPageReport]="true"
+        [(contextMenuSelection)]="selectedSyllabus" [contextMenu]="cm" [showCurrentPageReport]="true"
         [rowsPerPageOptions]="[10,25,50]" [loading]="loading" styleClass="p-datatable-gridlines" [paginator]="true"
         currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
-        styleClass="p-datatable-gridlines"
+        styleClass="p-datatable-responsive-demo"
         [globalFilterFields]="['coordinatorFullName', 'courseName', 'instructorName','archived', 'semesterNumber', 'academicYear']">
         <ng-template pTemplate="caption">
           <div class="p-d-flex">
@@ -38,6 +75,9 @@
         </ng-template>
         <ng-template pTemplate="header">
           <tr>
+            <th style="width: 3rem">
+              <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+            </th>
             <th pSortableColumn="courseName">
               <div class="p-d-flex p-jc-between p-ai-center">
                 Course
@@ -74,8 +114,12 @@
                 <p-columnFilter type="text" field="academicYear" display="menu" class="p-ml-auto"></p-columnFilter>
               </div>
             </th>
-            <th>
-              Actions
+            <th pSortableColumn="archived">
+              <div class="p-d-flex p-jc-between p-ai-center">
+                Archived
+                <p-sortIcon field="archived"></p-sortIcon>
+                <p-columnFilter type="text" field="archived" display="menu" class="p-ml-auto"></p-columnFilter>
+              </div>
             </th>
 
           </tr>
@@ -83,10 +127,10 @@
         <ng-template pTemplate="body" let-syllabus>
           <tr [pContextMenuRow]="syllabus">
             <td>
-
-              <a [routerLink]="['/syllabi', onSyllabiItemClick(syllabus._links.self.href)]"
-               > {{syllabus.courseName}}</a>
-
+              <p-tableCheckbox [value]="syllabus.id"></p-tableCheckbox>
+            </td>
+            <td>
+              {{syllabus.courseName}}
             </td>
             <td>
               {{syllabus.coordinatorFullName}}
@@ -101,8 +145,22 @@
               {{syllabus.academicYear}}
             </td>
             <td>
-              <button pButton pRipple type="button" class="p-button-rounded p-button-success p-mr-2" icon="pi pi-file-pdf"
-                 (click)="onDownloadFile(syllabus.syllabusFileName)" pTooltip="Download file" ></button>
+              {{syllabus.archived}}
+            </td>
+            <td>
+              <ng-container *ngIf="syllabusIsMine; else elseTemplate">
+                <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success p-mr-2"
+                  (click)="editSyllabus(syllabus)"></button>
+                <button pButton pRipple type="button" class="p-button-rounded p-button-success p-mr-2"
+                  icon="pi pi-arrow-down" (click)="onDownloadFile(syllabus.syllabusFileName)"></button>
+              </ng-container>
+              <ng-template #elseTemplate>
+                <button pButton pRipple type="button" class="p-button-rounded p-button-success p-mr-2"
+                  icon="pi pi-arrow-down" (click)="onDownloadFile(syllabus.syllabusFileName)"></button>
+              </ng-template>
+
+
+
             </td>
           </tr>
         </ng-template>
@@ -113,3 +171,4 @@
         </ng-template>
       </p-table>
     </div>
+  </p-panel>

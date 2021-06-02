@@ -70,6 +70,9 @@ import {TooltipModule} from 'primeng/tooltip';
 import { PdfViewerModule } from 'ng2-pdf-viewer';
 import {ChartModule} from 'primeng/chart';
 import { DashboardAdminComponent } from './pages/dashboard-admin/dashboard-admin.component';
+import { ProfessorComponent } from './views/professor/professor.component';
+import { ProfSyllabiComponent } from './pages/syllabi/prof-syllabi/prof-syllabi.component';
+import { NewCourseAssessmentComponent } from './pages/course-assessment/new-course-assessment/new-course-assessment.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -95,6 +98,9 @@ import { DashboardAdminComponent } from './pages/dashboard-admin/dashboard-admin
     PoesComponent,
     MissionsComponent,
     DashboardAdminComponent,
+    ProfessorComponent,
+    ProfSyllabiComponent,
+    NewCourseAssessmentComponent
   ],
   imports: [
     BrowserModule,

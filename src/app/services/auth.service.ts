@@ -18,7 +18,7 @@ export class AuthService {
 
   isLoggedIn = false;
   // store the URL so we can redirect after logging in
-  redirectUrl: string;
+  static redirectUrl: string= '';
   constructor(
     private catService: CatalogueService,
     private router: Router,
@@ -33,20 +33,20 @@ export class AuthService {
         console.log(this.user);
 
         if (this.isUserAdmin()) {
-          this.redirectUrl = '/admin';
+          AuthService.redirectUrl = '/admin';
         } else if(this.isUserCoordinator() || this.isUserInstructor()) {
-          this.redirectUrl = '/prof';
+          AuthService.redirectUrl = '/prof';
         } else {
           console.log('not connected');
-
-          this.redirectUrl = '';
+          AuthService.redirectUrl = '';
         }
 
-        this.router.navigate([this.redirectUrl]).then(() => {
-          this.reloadPage();
-        });
 
         this.isLoggedIn = true;
+        
+        this.router.navigate([AuthService.redirectUrl]).then(() => {
+          this.reloadPage();
+        });
       },
       (err) => {
         console.log(err);

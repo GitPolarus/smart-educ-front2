@@ -1,5 +1,5 @@
 import { AuthService } from './../services/auth.service';
-import { Injectable } from '@angular/core';
+import { Injectable, Input } from '@angular/core';
 import { CanActivate, CanActivateChild, ActivatedRouteSnapshot, RouterStateSnapshot, UrlTree, CanLoad, Router, UrlSegment } from '@angular/router';
 import { Observable } from 'rxjs';
 import { Route } from '@angular/compiler/src/core';
@@ -7,15 +7,16 @@ import { Route } from '@angular/compiler/src/core';
 @Injectable({
   providedIn: 'root'
 })
-export class ProfGuard implements CanActivate, CanActivateChild, CanLoad{
+export class ProfGuard implements CanActivate, CanActivateChild, CanLoad {
+  
   constructor(private authService: AuthService, private router: Router) {
   }
   canActivate(
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
 
-    console.log('AuthGuard#canActivate called');
-    return  this.authService.isUserLogged();
+    // console.log('AuthGuard#canActivate called');
+    return this.checkLogin('/prof');
   }
   canActivateChild(
     next: ActivatedRouteSnapshot,
@@ -30,14 +31,19 @@ export class ProfGuard implements CanActivate, CanActivateChild, CanLoad{
     return true;
   }
 
-  checkLogin(url: string): true|UrlTree {
-    if (this.authService.isUserLogged() && (this.authService.isUserCoordinator() || this.authService.isUserInstructor())) { return true; }
+  checkLogin(url: string): boolean | UrlTree {
+    if (this.authService.isUserLogged() && (this.authService.isUserCoordinator() || this.authService.isUserInstructor())) { 
+      // console.log('connected');
+      
+      return true;
+     }
 
     // Store the attempted URL for redirecting
-    this.authService.redirectUrl = url;
-
+    AuthService.redirectUrl = url;
+    console.log(AuthService.redirectUrl);
     // Redirect to the login page
-    return this.router.parseUrl('/login');
+     return this.router.parseUrl('/not-allowed');
+    // return false;
   }
 
 }

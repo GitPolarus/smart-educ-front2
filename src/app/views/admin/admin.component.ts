@@ -12,7 +12,7 @@ export class AdminComponent implements OnInit {
     items: MegaMenuItem[];
 
     constructor(private route: Router) {
-
+        AuthService.redirectUrl = '/admin';
     }
 
     ngOnInit() {
