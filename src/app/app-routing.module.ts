@@ -26,6 +26,8 @@ import { PermissionNotGrantedComponent } from './pages/permission-not-granted/pe
 import { DashboardProfComponent } from './pages/dashboard-prof/dashboard-prof.component';
 import { ProfSyllabiComponent } from './pages/syllabi/prof-syllabi/prof-syllabi.component';
 import { NewCourseAssessmentComponent } from './pages/course-assessment/new-course-assessment/new-course-assessment.component';
+import { AbetCriteriaComponent } from './pages/abet-criteria/abet-criteria.component';
+import { ParametersComponent } from './pages/parameters/parameters.component';
 
 const routes: Routes = [
   {
@@ -79,6 +81,14 @@ const routes: Routes = [
       {
         path: 'dashboard',
         component: DashboardAdminComponent,
+      },
+      {
+        path: 'abet_criteria',
+        component: AbetCriteriaComponent,
+      },
+      {
+        path: 'parameters',
+        component: ParametersComponent,
       },
       {
         path: 'courses',
