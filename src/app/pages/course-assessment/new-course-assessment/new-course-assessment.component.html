@@ -53,7 +53,8 @@
           </p-inputNumber>
             </ng-template>
             <ng-template pTemplate="output">
-              {{co.validationPercentage}}
+              <p-progressBar [value]="co.validationPercentage" [showValue]="true"></p-progressBar>
+              <!-- {{co.validationPercentage}} -->
             </ng-template>
           </p-cellEditor>
         </td>

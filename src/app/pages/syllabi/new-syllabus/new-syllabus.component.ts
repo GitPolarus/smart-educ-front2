@@ -28,7 +28,7 @@ class DropdownCourse {
   providers: [MessageService, ConfirmationService],
 })
 export class NewSyllabusComponent implements OnInit {
-  newSyllabus: Syllabus;
+  newSyllabus: Syllabus = new Syllabus();
 
   fileUploaded = false;
 
@@ -59,9 +59,16 @@ export class NewSyllabusComponent implements OnInit {
   tos: any[] = [];
   gradings: any[] = [];
 
+  maxCreditHours: number = 48;
+  maxLectureHours: number = 48
+  maxTutorialHours: number = 24;
+  maxLabHours: number = 24;
+
+  maxGrading = 100;
+
   @Input() selectedInstructor: UserAccount = new UserAccount();
 
-  @Input() isAdmin:boolean = true;
+  @Input() isAdmin: boolean = true;
 
   @Output() newSaveEvent = new EventEmitter();
 
@@ -81,7 +88,7 @@ export class NewSyllabusComponent implements OnInit {
   filteredCourses: Course[];
   filteredUsers: UserAccount[];
 
-  submitted:boolean = false;
+  submitted: boolean = false;
   submittedSyllabus: Syllabus = new Syllabus();
   constructor(
     private authService: AuthService,
@@ -96,9 +103,9 @@ export class NewSyllabusComponent implements OnInit {
       { weekNumber: this.tos.length + 1, chapter: '', lectureTopic: '' },
     ];
     this.gradings = [
-      { item: 'Final exam 1', percentage: 50 },
-      { item: 'Midterm 1 (CC1)', percentage: 0 },
-      { item: 'Midterm 2 (CC2)', percentage: 0 },
+      { item: 'Final exam', percentage: 50, disabled: true, max: 100 },
+      { item: 'Midterm 2 (CC2)', percentage: 0, disabled: false, max: 50 },
+      { item: 'Midterm 1 (CC1)', percentage: 0, disabled: false, max: 50 },
     ];
 
     this.courseOutcomes = [
@@ -125,6 +132,41 @@ export class NewSyllabusComponent implements OnInit {
     this.formArray.push(this.addFormControl());
   }
 
+  /**
+   * onUpdateMaxHours
+   */
+  public onUpdateMaxHours() {
+    // console.log(e.value);
+    if (this.newSyllabus.creditHours < (this.newSyllabus.tutorialHours + this.newSyllabus.labHours + this.newSyllabus.lectureHours)) {
+      this.newSyllabus.tutorialHours = 0;
+      this.newSyllabus.labHours = 0;
+      this.newSyllabus.lectureHours = this.newSyllabus.creditHours;
+    }
+    this.maxLectureHours = this.newSyllabus.creditHours - (this.newSyllabus.tutorialHours + this.newSyllabus.labHours);
+    this.maxTutorialHours = this.newSyllabus.creditHours - (this.newSyllabus.lectureHours + this.newSyllabus.labHours);
+    this.maxLabHours = this.newSyllabus.creditHours - (this.newSyllabus.lectureHours + this.newSyllabus.tutorialHours);
+    // console.log(this.maxLectureHours);
+    // console.log(this.maxLabHours);
+    // console.log(this.maxTutorialHours);
+
+  }
+  /* 
+    public onUpdateMaxGradings() {
+      for (let index = 0; index < this.gradings.length; index++) {
+  
+        if (index > 0) {
+          let gp = this.gradings[index - 1];
+          let g = this.gradings[index];
+          console.log(g.max);
+          if(this.maxGrading > 0 && this.maxGrading > gp.percentage){
+            this.maxGrading = this.maxGrading  - gp.percentage; 
+          }
+          
+        }
+      }
+  
+    }
+   */
   refreshSyllabusList() {
     this.newSaveEvent.emit('saved');
   }
@@ -166,7 +208,7 @@ export class NewSyllabusComponent implements OnInit {
   onAddGrading(): any {
     return this.gradings.push({
       item: '',
-      percentage: 0,
+      percentage: 0, disabled: false, max: 50
     });
   }
 
@@ -301,8 +343,8 @@ export class NewSyllabusComponent implements OnInit {
    */
   public onSave(): void {
     this.getArraysElements();
-    this.newSyllabus.topicalOutlines = this.tos;
-    this.newSyllabus.gradings = this.gradings;
+    this.newSyllabus.topicalOutlines = this.tos.reverse();
+    this.newSyllabus.gradings = this.gradings.reverse();
     this.newSyllabus.semesterNumber = this.selectedsemester.semesterNumber;
     this.newSyllabus.academicYear = this.selectedsemester.academicYear;
     this.newSyllabus.courseName = this.selectedCourse.courseName;
@@ -360,14 +402,18 @@ export class NewSyllabusComponent implements OnInit {
 
     // get text books
     this.formArray.controls.forEach((tb) => {
-      this.newSyllabus.textBooks.push(tb.value);
+      let textBook = '' + tb.value;
+      if (textBook.trim() != '') {
+        this.newSyllabus.textBooks.push(tb.value);
+      }
+
     });
 
     // get CourseOutcomes
     // this.courseOutcomes.forEach((element) => {
     //   this.newSyllabus.courseOutcomes.push(element);
     // });
-    this.newSyllabus.courseOutcomes =this.courseOutcomes;
+    this.newSyllabus.courseOutcomes = this.courseOutcomes.reverse();
   }
 
   /**
@@ -382,6 +428,10 @@ export class NewSyllabusComponent implements OnInit {
     });
   }
 
+  onNewSyllabusClick() {
+    this.newSyllabus = new Syllabus();
+    this.submitted = false;
+  }
   /**
    * onDownloadFile()
    */

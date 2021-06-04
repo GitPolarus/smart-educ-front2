@@ -69,28 +69,28 @@
         <div class="p-field p-col-12 p-md-3">
           <label for="creditHours">Credit Hours</label>
           <p-inputNumber [(ngModel)]="newSyllabus.creditHours" [showButtons]="true" buttonLayout="horizontal"
-            inputId="creditHours" spinnerMode="horizontal" [step]="12" [min]=0 decrementButtonClass="p-button-danger"
+            inputId="creditHours" spinnerMode="horizontal" [step]="12" [min]="0" [max]="maxCreditHours" (click)="onUpdateMaxHours()"  decrementButtonClass="p-button-danger"
             incrementButtonClass="p-button-success" incrementButtonIcon="pi pi-plus" decrementButtonIcon="pi pi-minus">
           </p-inputNumber>
         </div>
         <div class="p-field p-col-12 p-md-3">
           <label for="lectureHours">Lecture Hours</label>
           <p-inputNumber [(ngModel)]="newSyllabus.lectureHours" [showButtons]="true" buttonLayout="horizontal"
-            inputId="lectureHours" spinnerMode="horizontal" [step]="6" [min]=0 decrementButtonClass="p-button-danger"
+            inputId="lectureHours" spinnerMode="horizontal" [step]="6" [min]=0 [max]="maxLectureHours" (click)="onUpdateMaxHours()" decrementButtonClass="p-button-danger"
             incrementButtonClass="p-button-success" incrementButtonIcon="pi pi-plus" decrementButtonIcon="pi pi-minus">
           </p-inputNumber>
         </div>
         <div class="p-field p-col-12 p-md-3">
           <label for="horizontal">Tutorial Hours</label>
-          <p-inputNumber [(ngModel)]="newSyllabus.tutorialHours" [showButtons]="true" buttonLayout="horizontal"
-            inputId="horizontal" spinnerMode="horizontal" [step]="6" [min]=0 decrementButtonClass="p-button-danger"
+          <p-inputNumber [(ngModel)]="newSyllabus.tutorialHours" [showButtons]="true" buttonLayout="horizontal" name="tutorialHours"
+            inputId="horizontal" spinnerMode="horizontal" [step]="6" [min]=0 [max]="maxTutorialHours" (click)="onUpdateMaxHours()" decrementButtonClass="p-button-danger"
             incrementButtonClass="p-button-success" incrementButtonIcon="pi pi-plus" decrementButtonIcon="pi pi-minus">
           </p-inputNumber>
         </div>
         <div class="p-field p-col-12 p-md-3">
           <label for="labHours">Lab Hours</label>
           <p-inputNumber [(ngModel)]="newSyllabus.labHours" [showButtons]="true" buttonLayout="horizontal"
-            inputId="labHours" spinnerMode="horizontal" [step]="6" [min]=0 decrementButtonClass="p-button-danger"
+            inputId="labHours" spinnerMode="horizontal" [step]="6" [min]=0 [max]="maxLabHours" decrementButtonClass="p-button-danger"
             incrementButtonClass="p-button-success" incrementButtonIcon="pi pi-plus" decrementButtonIcon="pi pi-minus">
           </p-inputNumber>
         </div>
@@ -202,7 +202,7 @@
                 <p-cellEditor>
                   <ng-template pTemplate="input">
                     <span class="p-fluid">
-                      <input pInputText type="text" [(ngModel)]="grading.item">
+                      <input pInputText type="text" [(ngModel)]="grading.item"  [disabled]="grading.disabled"> 
                     </span>
                   </ng-template>
                   <ng-template pTemplate="output">
@@ -214,8 +214,8 @@
               <td pEditableColumn>
                 <p-cellEditor>
                   <ng-template pTemplate="input">
-                    <p-inputNumber [(ngModel)]="grading.percentage" [min]="0" [max]="100" [step]="5"
-                      [showButtons]="true">
+                    <p-inputNumber [(ngModel)]="grading.percentage" [min]="0"  [step]="5"
+                      [showButtons]="true" [max]="grading.max" [disabled]="grading.disabled">
                     </p-inputNumber>
                   </ng-template>
                   <ng-template pTemplate="output">
@@ -396,6 +396,9 @@
       <ng-container *ngIf="submitted; else elseTemplate">
         <button pButton type="button" label="Download File" class="p-button-success p-mr-2" icon="pi pi-arrow-down"
           iconPos="left" (click)="onDownloadFile()"></button>
+          
+          <button pButton type="button" label="New" class="p-button-primary p-mr-2"
+          iconPos="left" (click)="onNewSyllabusClick()"></button>
       </ng-container>
       <ng-template #elseTemplate>
 

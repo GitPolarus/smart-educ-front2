@@ -21,10 +21,10 @@ export class Syllabus {
   academicEthics: string;
   archived = false;
   syllabusFileName: string;
-  lectureHours: number;
-  tutorialHours: number;
-  labHours: number;
-  creditHours: number;
+  lectureHours: number = 0;
+  tutorialHours: number  = 0;
+  labHours: number  = 0;
+  creditHours: number  = 0;
   school: string;
   generated = false;
   courseName: string;
