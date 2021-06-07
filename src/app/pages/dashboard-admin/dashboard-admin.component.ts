@@ -5,6 +5,7 @@ import { CourseOutcome } from 'src/app/models/courseoutcome.model';
 import { Semester } from 'src/app/models/semester.model';
 import { Syllabus } from 'src/app/models/syllabus.model';
 import { CatalogueService } from 'src/app/services/catalogue.service';
+import { VisitorComponent } from 'src/app/views/visitor/visitor.component';
 
 @Component({
   selector: 'app-dashboard-admin',
@@ -32,7 +33,9 @@ export class DashboardAdminComponent implements OnInit {
 
   countNumbers: any = [];
   constructor(private catService: CatalogueService,
-    private route: Router) { }
+    private route: Router) {
+      VisitorComponent.isBoardLoaded = true;
+     }
 
   ngOnInit() {
     this.getCountNumbers();

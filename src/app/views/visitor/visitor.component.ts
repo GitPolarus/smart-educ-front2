@@ -16,8 +16,11 @@ export class VisitorComponent implements OnInit {
   isCoordinator = false;
   isInstructor = false;
 
+  static isBoardLoaded: boolean = false;
+
   constructor(private authService: AuthService){
     this.isLogin = authService.isUserLogged();
+    VisitorComponent.isBoardLoaded = false;
   }
 
   ngOnInit() {

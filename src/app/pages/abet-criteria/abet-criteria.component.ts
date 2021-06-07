@@ -38,6 +38,7 @@ export class AbetCriteriaComponent implements OnInit {
         this.abetCriteriaList = data._embedded.abetCriterias;
         this.setPropositionList();
         this.updateRowGroupMetaData();
+        this.buildGraph();
         this.loading = false;
         console.log(data);
       },
@@ -133,16 +134,33 @@ export class AbetCriteriaComponent implements OnInit {
   public buildGraph() {
 
     this.abetCriteriaList.forEach(element => {
+      console.log(element.status);
       switch(element.status){
-        case 'NON_COMPLIANT': this.statusPercentage[0]; 
-      }
-    });
+        
+        case 'NON_COMPLIANT': this.statusPercentage[0] = this.statusPercentage[0]+1; 
+        break;
 
+        case 'COMPLIANT': this.statusPercentage[1] = this.statusPercentage[1]+1; 
+        break; 
+        
+        case 'IN_PROGRESS': this.statusPercentage[2] = this.statusPercentage[2]+1; 
+        break;
+      }
+      console.log(this.statusPercentage);
+
+    });
+   let total = this.statusPercentage[0]+this.statusPercentage[1]+this.statusPercentage[2];
+    let p_noncompliant = (this.statusPercentage[0] *100)/total;
+    let p_compliant = (this.statusPercentage[1] * 100)/total;
+    let p_inprogress = (this.statusPercentage[2] * 100)/total;
+
+    console.log(p_noncompliant);
+    
     this.data = {
       labels: ['Non Compliant', 'Compliant', 'In progress'],
       datasets: [
         {
-          data: [300, 50, 100],
+          data: [p_noncompliant, p_compliant, p_inprogress],
           backgroundColor: [
             "#FF6384",
             "#36A2EB",
@@ -168,4 +186,5 @@ export class AbetCriteriaComponent implements OnInit {
     };
 
   }
+
 }
