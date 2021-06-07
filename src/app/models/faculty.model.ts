@@ -5,6 +5,7 @@ export class Faculty{
   facultyName: string;
   logo: string;
   description: string;
+  academicEthics: string;
   soNumber: number;
   studentOutcomes: StudentOutcome[];
   semesters: Semester[];

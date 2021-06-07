@@ -2,6 +2,7 @@ import { MegaMenuItem, MenuItem } from 'primeng/api';
 import { AuthService } from './../../services/auth.service';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { VisitorComponent } from '../visitor/visitor.component';
 
 @Component({
     selector: 'app-admin',
@@ -13,11 +14,12 @@ export class AdminComponent implements OnInit {
 
     constructor(private route: Router) {
         AuthService.redirectUrl = '/admin';
+
+
     }
 
     ngOnInit() {
         this.route.navigate(['/admin/dashboard']);
-
         this.items = [
             {
                 label: 'Videos', icon: 'pi pi-fw pi-video',

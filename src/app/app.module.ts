@@ -73,6 +73,8 @@ import { DashboardAdminComponent } from './pages/dashboard-admin/dashboard-admin
 import { ProfessorComponent } from './views/professor/professor.component';
 import { ProfSyllabiComponent } from './pages/syllabi/prof-syllabi/prof-syllabi.component';
 import { NewCourseAssessmentComponent } from './pages/course-assessment/new-course-assessment/new-course-assessment.component';
+import { AbetCriteriaComponent } from './pages/abet-criteria/abet-criteria.component';
+import { ParametersComponent } from './pages/parameters/parameters.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -100,7 +102,9 @@ import { NewCourseAssessmentComponent } from './pages/course-assessment/new-cour
     DashboardAdminComponent,
     ProfessorComponent,
     ProfSyllabiComponent,
-    NewCourseAssessmentComponent
+    NewCourseAssessmentComponent,
+    AbetCriteriaComponent,
+    ParametersComponent,
   ],
   imports: [
     BrowserModule,
