@@ -99,9 +99,12 @@ export class NewSyllabusComponent implements OnInit {
   ) {
     this.tbForm = this.fb.group({});
     this.formArray = this.fb.array([]);
-    this.tos = [
-      { weekNumber: this.tos.length + 1, chapter: '', lectureTopic: '' },
-    ];
+    
+    for (let index = 0; index < 8; index++) {
+     this.tos.push({ weekNumber: this.tos.length + 1, chapter: '', lectureTopic: '' },)
+      
+    }
+
     this.gradings = [
       { item: 'Final exam', percentage: 50, disabled: true, max: 100 },
       { item: 'Midterm 2 (CC2)', percentage: 0, disabled: false, max: 50 },
@@ -256,7 +259,7 @@ export class NewSyllabusComponent implements OnInit {
    * getCourses
    */
   public getCourses(): void {
-    this.catService.getList('courses').subscribe(
+    this.catService.getList('courses?size=500').subscribe(
       (data: any) => {
         this.courses = data._embedded.courses;
         console.log(this.courses);

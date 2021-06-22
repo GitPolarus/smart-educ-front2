@@ -29,7 +29,7 @@ export class NewCourseComponent implements OnInit {
   courses: Course[];
   selectedCourses: Course[];
   selectedCourse: Course;
-  newCourse: Course;
+  newCourse: Course = new Course();
   loading = true;
   displayDialog: boolean;
   submitted = false;
@@ -41,7 +41,7 @@ export class NewCourseComponent implements OnInit {
   facultyOptions: FO[];
   selectedOption: FO;
   users: UserAccount[];
-  selectedUser: User;
+  selectedUser: User = new User('','');
 
   constructor(
     private authService: AuthService,
@@ -50,8 +50,8 @@ export class NewCourseComponent implements OnInit {
     private confirmationService: ConfirmationService
   ) {
     this.facultyOptions = [
-      { name: 'information System Engineering' },
-      { name: 'Information System Security' },
+      { name: 'information Systems Engineering' },
+      { name: 'Information Systems Security' },
       { name: 'Big Data' },
     ];
   }

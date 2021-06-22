@@ -1,0 +1,22 @@
+.overlay {
+    position: absolute;
+    min-height: 100%;
+    min-width: 100%;
+    left: 0;
+    top: 0;
+    background: rgba(0, 0, 0, 0.6);
+}
+
+.header{
+    background: url("../../../assets/images/bg2.jpg") no-repeat center ;
+    // background-position: center;
+    width: 100vw;
+    height: 100vh;
+    position: relative;
+    color:#2196F3;
+    text-shadow:1px 1px lightgrey;
+    margin: 0%;
+    // padding: 5%;
+  }
+
+  

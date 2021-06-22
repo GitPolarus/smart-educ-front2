@@ -38,34 +38,79 @@
       <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
         <!-- Add icons to the links using the .nav-icon class
              with font-awesome or any other icon font library -->
-        <li class="nav-item">
-          <a [routerLink]="['/'+baseUrl+'/dashboard']" routerLinkActive class="nav-link" class="nav-link">
-            <i class="nav-icon fas fa-tachometer-alt"></i>
-            <p>
-              Dashboard
-              <!-- <i class="right fas fa-angle-left"></i> -->
-            </p>
-          </a>
-        </li>
+        <ng-container *ngIf="isAdmin ; then adminTemplate">
+        </ng-container>
+        
+        <ng-container *ngIf="isCoordinator ; then adminTemplate">
+        </ng-container>
+        
+        <ng-container *ngIf="isInstructor ; then instructorTemplate">
+        </ng-container>
+        
+        
+        <ng-template #instructorTemplate>
+          <li class="nav-item">
+            <a routerLink="/prof/syllabi" routerLinkActive class="nav-link">
+              <i class="far fa-circle nav-icon"></i>
+              <p>Syllabus</p>
+            </a>
+          </li>
 
-        <li class="nav-header">Functionalities</li>
-        <ng-container *ngIf="isAdmin; else elseTemplate">
+          <li class="nav-item">
+            <a routerLink="/prof/course_assessment" routerLinkActive class="nav-link">
+              <i class="far fa-circle nav-icon"></i>
+              <p>Course Assements</p>
+            </a>
+          </li>
+        </ng-template>
+
+        <ng-template #coordinatorTemplate>
+          <li class="nav-item">
+            <a [routerLink]="['/'+baseUrl+'/dashboard']" routerLinkActive class="nav-link" class="nav-link">
+              <i class="nav-icon fas fa-tachometer-alt"></i>
+              <p>
+                Dashboard
+                <!-- <i class="right fas fa-angle-left"></i> -->
+              </p>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a routerLink="/prof/syllabi" routerLinkActive class="nav-link">
+              <i class="far fa-circle nav-icon"></i>
+              <p>Syllabus</p>
+            </a>
+          </li>
+        </ng-template>
+        
+        <ng-template #adminTemplate>
+          <li class="nav-item">
+            <a [routerLink]="['/'+baseUrl+'/dashboard']" routerLinkActive class="nav-link" class="nav-link">
+              <i class="nav-icon fas fa-tachometer-alt"></i>
+              <p>
+                Dashboard
+                <!-- <i class="right fas fa-angle-left"></i> -->
+              </p>
+            </a>
+          </li>
           <li class="nav-item">
             <a [routerLink]="['/'+baseUrl+'/abet_criteria']" routerLinkActive class="nav-link" class="nav-link">
               <i class="nav-icon far fa-circle"></i>
               <p>
                 Abet Criteria
+                <!-- <i class="right fas fa-angle-left"></i> -->
               </p>
             </a>
           </li>
-        <!--   <li class="nav-item">
+          <li class="nav-item">
             <a [routerLink]="['/'+baseUrl+'/parameters']" routerLinkActive class="nav-link" class="nav-link">
               <i class="nav-icon far fa-circle"></i>
               <p>
                 Parameters
+                <!-- <i class="right fas fa-angle-left"></i> -->
               </p>
             </a>
-          </li> -->
+          </li>
+          <li class="nav-header">Functionalities</li>
           <li class="nav-item">
             <a routerLink="/admin/users" routerLinkActive class="nav-link">
               <i class="nav-icon fa fa-users"></i>
@@ -130,22 +175,10 @@
             </a>
           </li>
 
-        </ng-container>
-        <ng-template #elseTemplate>
-          <li class="nav-item">
-            <a routerLink="/prof/syllabi" routerLinkActive class="nav-link">
-              <i class="far fa-circle nav-icon"></i>
-              <p>Syllabus</p>
-            </a>
-          </li>
-
-          <li class="nav-item">
-            <a routerLink="/prof/course_assessment" routerLinkActive class="nav-link">
-              <i class="far fa-circle nav-icon"></i>
-              <p>Course Assements</p>
-            </a>
-          </li>
         </ng-template>
+
+
+
       </ul>
     </nav>
     <!-- /.sidebar-menu -->
