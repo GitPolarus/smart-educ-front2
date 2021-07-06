@@ -59,7 +59,7 @@ export class NewSyllabusComponent implements OnInit {
   tos: any[] = [];
   gradings: any[] = [];
 
-  maxCreditHours: number = 48;
+  maxCreditHours: number = 50;
   maxLectureHours: number = 48
   maxTutorialHours: number = 24;
   maxLabHours: number = 24;
@@ -99,9 +99,12 @@ export class NewSyllabusComponent implements OnInit {
   ) {
     this.tbForm = this.fb.group({});
     this.formArray = this.fb.array([]);
-    this.tos = [
-      { weekNumber: this.tos.length + 1, chapter: '', lectureTopic: '' },
-    ];
+
+    for (let index = 0; index < 8; index++) {
+      this.tos.push({ weekNumber: this.tos.length + 1, chapter: '', lectureTopic: '' },)
+
+    }
+
     this.gradings = [
       { item: 'Final exam', percentage: 50, disabled: true, max: 100 },
       { item: 'Midterm 2 (CC2)', percentage: 0, disabled: false, max: 50 },
@@ -256,7 +259,7 @@ export class NewSyllabusComponent implements OnInit {
    * getCourses
    */
   public getCourses(): void {
-    this.catService.getList('courses').subscribe(
+    this.catService.getList('courses?size=500').subscribe(
       (data: any) => {
         this.courses = data._embedded.courses;
         console.log(this.courses);
@@ -352,6 +355,8 @@ export class NewSyllabusComponent implements OnInit {
     this.getCoordinatorInfos(this.selectedCourse.coordinatorEmail);
     this.newSyllabus.instructorEmail = this.selectedInstructor.email;
     this.newSyllabus.instructorName = this.selectedInstructor.fullName;
+    this.newSyllabus.school = "Ecole Supérieur d'Informatique et du Numérique.";
+    this.newSyllabus.academicEthics = "The university has strict policy against cheating, and anybody caught cheating will be given an F in the course pending an investigation. I expect all my students to behave ethically, that is, no cheating and no plagiarism, or any other kind of fraud. I define plagiarism as presenting other people’s work (whether it is from your classmate, or your friend, or from a text book, or from a on-line source) as your own. Fraud includes making up the results for programming projects. You are advised to read the university academic policy against cheating in the undergraduate catalog.";
 
     console.log(this.newSyllabus);
 
@@ -363,6 +368,7 @@ export class NewSyllabusComponent implements OnInit {
           severity: 'success',
           summary: 'New Syllabus',
           detail: 'Syllabus Succefull created',
+
         });
         this.submitted = true;
         this.submittedSyllabus = data;
@@ -379,6 +385,20 @@ export class NewSyllabusComponent implements OnInit {
         });
       }
     );
+
+   
+
+  }
+
+  public init(): void{
+    this.newSyllabus.coRequisiteCourses = [];
+    this.newSyllabus.preRequisiteCourses = [];
+    this.newSyllabus.semesterNumber = null;
+    this.newSyllabus.academicYear = null;
+    this.newSyllabus.courseName = "";
+    this.newSyllabus.coordinatorEmail = "";
+    this.newSyllabus.instructorEmail = "";
+    this.newSyllabus.instructorName ="";
   }
 
   /**
@@ -402,7 +422,9 @@ export class NewSyllabusComponent implements OnInit {
 
     // get text books
     this.formArray.controls.forEach((tb) => {
-      let textBook = '' + tb.value;
+      // console.log(tb.value.reference);
+      
+      let textBook = '' + tb.value.reference;
       if (textBook.trim() != '') {
         this.newSyllabus.textBooks.push(tb.value);
       }

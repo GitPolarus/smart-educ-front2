@@ -13,6 +13,8 @@ export class SidebarComponent implements OnInit {
   countNumbers: any = [];
   public isLogin = false;
   isAdmin: boolean = false;
+  isInstructor: boolean = false;
+  isCoordinator: boolean = false;
   public user : UserAccount;
   baseUrl: string;
   @Input() public display = false;
@@ -31,7 +33,13 @@ export class SidebarComponent implements OnInit {
       this.user = this.authService.getUser();
       this.baseUrl = AuthService.redirectUrl;
       this.isAdmin =this.authService.isUserAdmin();
+      this.isInstructor =this.authService.isUserInstructor();
+      this.isCoordinator =this.authService.isUserCoordinator();
       // console.log(AuthService.redirectUrl);
+      console.log(this.isAdmin);
+      console.log(this.isInstructor);
+      console.log(this.isCoordinator);
+      
     }
     this.getCountNumbers()
   }
