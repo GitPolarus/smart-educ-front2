@@ -128,7 +128,8 @@
               <p-tableCheckbox [value]="syllabus.id"></p-tableCheckbox>
             </td>
             <td>
-              {{syllabus.courseName}}
+              <a [routerLink]="['../syllabi', onSyllabiItemClick(syllabus._links.self.href)]"
+              > {{syllabus.courseName}}</a>
             </td>
             <td>
               {{syllabus.coordinatorFullName}}

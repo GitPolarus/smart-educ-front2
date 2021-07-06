@@ -1,12 +1,29 @@
 <div class="container">
-  <div class="p-m-5">
+  <!-- Content Header (Page header) -->
+  <section class="content-header">
+    <div class="container-fluid">
+      <div class="row mb-2">
+        <div class="col-sm-6">
+          <h1>Mission Statement</h1>
+        </div>
+        <div class="col-sm-6">
+          <ol class="breadcrumb float-sm-right">
+            <li class="breadcrumb-item"><a href="#">Home</a></li>
+            <li class="breadcrumb-item active">Mission Statement</li>
+          </ol>
+        </div>
+      </div>
+    </div><!-- /.container-fluid -->
+  </section>
+<div class="container">
+  <div class="p-mb-5">
     <p-panel header="Mission Statement" [toggleable]="false">
       The mission of ESIN School at UIR is to deliver a modern computer science curriculum that will equip graduates
       with
       strong theoretical and practical backgrounds to enable them to excel in the workplace and to be lifelong learners.
     </p-panel>
   </div>
-  <div class="p-text-justify p-m-5">
+  <div class="p-text-justify p-mb-5">
     <p-panel header="PROGRAM MISSION" [toggleable]="false">
       The Computer Science program at UIR is designed to provide students with a strong core understanding of the
       concepts
@@ -21,7 +38,7 @@
     </p-panel>
   </div>
 
-  <div class="p-m-5">
+  <div class="p-mb-5">
     <p-panel header="PEOs Alignment with UIR Mission"  [toggleable]="false">
       <p-table [value]="poes"  styleClass="p-datatable-gridlines" >
         <ng-template pTemplate="header">

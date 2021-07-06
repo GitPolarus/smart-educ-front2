@@ -34,13 +34,13 @@ export class DashboardAdminComponent implements OnInit {
   countNumbers: any = [];
   constructor(private catService: CatalogueService,
     private route: Router) {
-      VisitorComponent.isBoardLoaded = true;
-     }
+    VisitorComponent.isBoardLoaded = true;
+  }
 
   ngOnInit() {
     this.getCountNumbers();
 
-    this.getSyllabi();
+    // this.getSyllabi();
     this.getSemesters();
 
   }
@@ -60,9 +60,10 @@ export class DashboardAdminComponent implements OnInit {
    * onDropdownItemChange
    *  */
   public onDropdownItemChange(event: any): void {
-    // console.log(event);
+    console.log(event);
     if (event.value == null) {
-      this.getSyllabi();
+      // this.getSyllabi();
+      this.syllabi = []
     } else {
       this.getSyllabiByYearAndSemester(
         event.value.semesterNumber,
@@ -116,15 +117,18 @@ export class DashboardAdminComponent implements OnInit {
       .subscribe(
         (data: any) => {
           this.syllabi = data._embedded.syllabi;
-          // console.log(this.syllabi);
-          this.getCourseOutcomes();
-
+          console.log(this.syllabi);
+          if (this.syllabi.length>0) {
+            this.getCourseOutcomes();
+          }
           this.buildGraph();
         },
         (error) => {
           console.error(error);
         }
       );
+      console.log('consult');
+      
   }
 
   public getSyllabi(): void {
@@ -133,7 +137,7 @@ export class DashboardAdminComponent implements OnInit {
       .subscribe(
         (data: any) => {
           this.syllabi = data._embedded.syllabi;
-          // console.log(this.syllabi);
+          console.log(this.syllabi);
           this.getCourseOutcomes();
           this.buildGraph();
         },
@@ -150,15 +154,15 @@ export class DashboardAdminComponent implements OnInit {
     this.courseOutcomes = [];
     this.syllabi.forEach(element => {
       element.courseOutcomes.forEach(cos => {
-        this.courseOutcomes.push({ 
-          "so1": cos.so1, 
-        "so2": cos.so2,
-        "so3": cos.so3,
-        "so4": cos.so4,
-        "so5": cos.so5,
-        "so6": cos.so6,
-        "so7": cos.so7,
-       });
+        this.courseOutcomes.push({
+          "so1": cos.so1,
+          "so2": cos.so2,
+          "so3": cos.so3,
+          "so4": cos.so4,
+          "so5": cos.so5,
+          "so6": cos.so6,
+          "so7": cos.so7,
+        });
       });
     });
     // console.log(this.courseOutcomes);

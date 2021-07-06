@@ -154,10 +154,10 @@ export class AbetCriteriaComponent implements OnInit {
     let p_compliant = (this.statusPercentage[1] * 100)/total;
     let p_inprogress = (this.statusPercentage[2] * 100)/total;
 
-    console.log(p_noncompliant);
+    // console.log(p_noncompliant);
     
     this.data = {
-      labels: ['Non Compliant', 'Compliant', 'In progress'],
+      labels: [ p_noncompliant.toFixed(2)+'% Non Compliant', p_compliant.toFixed(2)+'% Compliant', p_inprogress.toFixed(2)+'% In progress'],
       datasets: [
         {
           data: [p_noncompliant, p_compliant, p_inprogress],

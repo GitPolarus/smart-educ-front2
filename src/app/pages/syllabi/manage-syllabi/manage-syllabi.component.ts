@@ -64,6 +64,14 @@ export class ManageSyllabiComponent implements OnInit {
     );
   }
 
+  /* 
+  syllabus item click
+  */
+  onSyllabiItemClick(href): string{
+    // console.log(href);
+    return btoa(href);
+  }
+
   public editSyllabus(syllabus): void {}
 
   /**
@@ -93,29 +101,5 @@ export class ManageSyllabiComponent implements OnInit {
     );
   }
 
-  // saveFile(data: any, filename?: string) {
-  //   const blob = new Blob([data], { type: 'pdf; charset=utf-8' });
-  //   fileSaver.saveAs(blob, filename);
-  // }
-
-  // /**
-  //  * onSaveFile
-  //  */
-  // public onSaveFile() {
-  //   this._http.get('demo.pdf', {
-  //     responseType: ResponseContentType.Blob // This must be a Blob type
-  //   }).subscribe(res => {
-  //     this._FileSaverService.save((<any>res)._body, fileName);
-  //   });
-  // }
-  // }
-
-  // onRemote(filename: string, fromRemote: boolean): Observable<Response> {
-  //   return this.http.get('http://localhost:8080/filestorage/files/' + filename, {
-  //     responseType: ResponseContentType.Blob
-  //   }).map(response => {
-  //     response.headers.set('filename', `demo.${type}`)
-  //     return response;
-  //   });
-  // }
+  
 }
