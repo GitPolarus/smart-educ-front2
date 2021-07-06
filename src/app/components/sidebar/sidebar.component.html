@@ -49,6 +49,7 @@
         
         
         <ng-template #instructorTemplate>
+          <li class="nav-header">Instructor</li>
           <li class="nav-item">
             <a routerLink="/prof/syllabi" routerLinkActive class="nav-link">
               <i class="far fa-circle nav-icon"></i>
@@ -65,6 +66,7 @@
         </ng-template>
 
         <ng-template #coordinatorTemplate>
+          <li class="nav-header">Coordinator</li>
           <li class="nav-item">
             <a [routerLink]="['/'+baseUrl+'/dashboard']" routerLinkActive class="nav-link" class="nav-link">
               <i class="nav-icon fas fa-tachometer-alt"></i>
@@ -83,6 +85,7 @@
         </ng-template>
         
         <ng-template #adminTemplate>
+          <li class="nav-header">Admin</li>
           <li class="nav-item">
             <a [routerLink]="['/'+baseUrl+'/dashboard']" routerLinkActive class="nav-link" class="nav-link">
               <i class="nav-icon fas fa-tachometer-alt"></i>
@@ -110,7 +113,7 @@
               </p>
             </a>
           </li>
-          <li class="nav-header">Functionalities</li>
+         
           <li class="nav-item">
             <a routerLink="/admin/users" routerLinkActive class="nav-link">
               <i class="nav-icon fa fa-users"></i>
